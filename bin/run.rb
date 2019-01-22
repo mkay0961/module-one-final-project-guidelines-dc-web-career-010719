@@ -50,7 +50,7 @@ def message
                                           +-+        +-+
   EOF
 
-  sleep(1)
+  sleep(0.2)
 
   system "clear"
   puts <<-'EOF'
@@ -72,7 +72,7 @@ def message
                                           +-+        +-+
   EOF
 
-  sleep(1)
+  sleep(0.2)
 
   system "clear"
   puts <<-'EOF'
@@ -93,7 +93,7 @@ def message
                                          .^V^.      .^V^.
                                           +-+        +-+
   EOF
-  sleep(1)
+  sleep(0.2)
 
   system "clear"
   puts <<-'EOF'
@@ -114,7 +114,7 @@ def message
                                          .^V^.      .^V^.
                                           +-+        +-+
   EOF
-  sleep(1)
+  sleep(0.2)
   system "clear"
   puts <<-'EOF'
                                       _--_
@@ -135,7 +135,7 @@ def message
                                +-+        +-+
   EOF
 
-  sleep(1)
+  sleep(0.2)
   system "clear"
   puts <<-'EOF'
                                     dMb

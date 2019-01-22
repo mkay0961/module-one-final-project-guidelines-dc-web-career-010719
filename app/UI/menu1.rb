@@ -7,6 +7,6 @@ def get_menu
     team_menu
   elsif input == "2" || input == "2."
     player_menu
-  else puts ""
+  else puts "Input 1 or 2"
   end
 end
