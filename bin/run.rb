@@ -17,3 +17,5 @@ puts "Welcome to the Baseball Database      _--_     dMb
                                        / /        | |
                                       .^V^.      .^V^.
                                        +-+        +-+"
+
+get_menu
