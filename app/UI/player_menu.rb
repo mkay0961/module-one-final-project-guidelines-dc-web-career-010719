@@ -62,7 +62,7 @@ def player_info_menu(player)
   when "1", "1.", "team"
     system "clear"
     get_team(player)
-    moreplayer(player)
+    #moreplayer(player)
     # puts "#{player.full_name} played for:"
     # player.teams.each {|team| puts"#{team.name}"}
   when "2", "2.", "position"
@@ -115,7 +115,30 @@ end
 
 def get_team(player)
   puts "#{player.full_name} played for:"
-  player.teams.each {|team| puts"#{team.name}"}
+  array = []
+  player.teams.each_with_index do |team,index|
+    puts "#{index+1}. #{team.name}"
+    array << team
+  end
+  puts "\nWould you like to know more about a team or the player?"
+  puts "Player ".red + "for more player info"
+  puts "Exit ".red + "to exit,"
+  puts "Team index ".red + "for a team"
+  puts "Restart ".red + "to select a new team or player"
+  input = gets.chomp.downcase
+  if input == "exit"
+    exit_program
+  elsif input == "player"
+    system "clear"
+    player_info_menu(player)
+  elsif input == "restart"
+    system "clear"
+    get_menu
+  elsif (0..array.length).include?(input.to_i)
+    menu_options(array[input.to_i-1])
+  end
+
+
 end
 
 def get_position(player)
@@ -167,6 +190,6 @@ def moreplayer(player)
     player_menu
   elsif input == "restart"
     system "clear"
-    get_menu    
+    get_menu
   end
 end

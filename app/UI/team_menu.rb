@@ -21,6 +21,7 @@ array = []
 end
 
 def menu_options(team)
+  system "clear"
   puts "What do you want to know about the #{team.name}"
   puts "1. The chosen year" + " roster".red
   puts "2." + " Where ".red + "do they play?" #city #state #venue
