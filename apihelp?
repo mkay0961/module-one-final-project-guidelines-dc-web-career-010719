@@ -1,0 +1,26 @@
+# require 'net/http'
+#  require 'open-uri'
+#  require 'json'
+#  require 'pry'
+#
+#  class GetTeams
+#
+#   URL = "http://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2017'"
+#   def get_teams
+#     uri = URI.parse(URL)
+#     response = Net::HTTP.get_response(uri)
+#     response.body
+#   end
+#
+#   def print_teams
+#     teams = JSON.parse(self.get_teams)
+#     teams["team_all_season"]["queryResults"]["row"].collect do |x|
+#     x["name_display_full"]
+#       # teams["team_all_season"]["queryResults"]["row"][0]["name_display_full"]
+#     end
+#   end
+#
+# end
+#
+#  teams = GetTeams.new
+# puts teams.print_teams.uniq
