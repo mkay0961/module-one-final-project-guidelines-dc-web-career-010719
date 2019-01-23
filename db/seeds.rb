@@ -2,9 +2,16 @@ Team.destroy_all
 Player.destroy_all
 PlayerTeam.destroy_all
 
-blues = Team.find_or_create_by(name:"washington blue" ,city: "washington", league: "NL", venue: "blue stadium", state: "DC", division: "NL East"  link: "1.com" Phonenumber: "70") 
-reds = Team.find_or_create_by(name:"DC reds" ,city: "washington DC", league: "NL", venue: "reds stadium",  state: "VA", division: "AL East"  link: "2.com" Phonenumber: "70")
-orange = Team.find_or_create_by(name:"DC oranges" ,city: "washington", league: "NL", venue: "orange stadium",  state: "MD", division: "CL West"  link: "3.com" Phonenumber: "70")
+blue = Team.find_or_create_by(name:"washington blue" ,city: "washington", league: "NL", venue: "blue stadium", state: "DC", division: "NL East",  link: "1.com", phonenumber: "70")
+red = Team.find_or_create_by(name:"DC reds" ,city: "washington DC", league: "NL", venue: "reds stadium",  state: "VA", division: "AL East",  link: "2.com", phonenumber: "70")
+orange = Team.find_or_create_by(name:"DC oranges" ,city: "washington", league: "LL", venue: "orange stadium",  state: "MD", division: "CL West",  link: "3.com", phonenumber: "70")
+yellow = Team.find_or_create_by(name:"yellows " ,city: "arlington", league: "KL", venue: "yellow stadium", state: "VA", division: "NL East",  link: "4.com", phonenumber: "70")
+white = Team.find_or_create_by(name:"LM white" ,city: "lemania", league: "AL", venue: "white stadium",  state: "VA", division: "CL East",  link: "6.com", phonenumber: "70")
+green = Team.find_or_create_by(name:"MD greens" ,city: "potomac", league: "BL", venue: "green stadium",  state: "MD", division: "CL West",  link: "5.com", phonenumber: "70")
+
+
+
+
 
 alex = Player.find_or_create_by(full_name: "alex smith", position: "pitcher", jersey_number: 3, height: 71, age: 20, bats: "R", twitterid: "@alex", throws: "L", nickname:"Big al")
 fred = Player.find_or_create_by(full_name: "fred smith", position: "catcher", jersey_number: 77, height: 75, age: 30, bats: "R", twitterid: "@fred", throws: "L", nickname:"Big f")
@@ -13,12 +20,16 @@ matt = Player.find_or_create_by(full_name: "matt matt", position: "pitcher", jer
 james = Player.find_or_create_by(full_name: "james kay", position: "outfield", jersey_number: 88, height: 70, age: 20, bats: "L", twitterid: "@james", throws: "R", nickname:"Big j")
 sydney = Player.find_or_create_by(full_name: "sydney kay", position: "pitcher", jersey_number: 11, height: 72, age: 21, bats: "R", twitterid: "@syd", throws: "R", nickname:"Big syd")
 aaron = Player.find_or_create_by(full_name: "aaron kay", position: "first base", jersey_number: 44, height: 77, age: 22, bats: "R", twitterid: "@aaron", throws: "L", nickname:"Big aa")
-matt = Player.find_or_create_by(full_name: "matt kay", position: "pitcher", jersey_number: 33, height: 64, age: 23, bats: "R", twitterid: "@matt", throws: "L", nickname:"Big m2")
+matt2 = Player.find_or_create_by(full_name: "matt kay", position: "pitcher", jersey_number: 33, height: 64, age: 23, bats: "R", twitterid: "@matt", throws: "L", nickname:"Big m2")
 
 
 
 
-join1 = PlayerTeam.find_or_create_by(player: alex, team: blues)
-join2 = PlayerTeam.find_or_create_by(player: fred, team: reds)
-join3 = PlayerTeam.find_or_create_by(player: sarah, team: blues)
-join4 = PlayerTeam.find_or_create_by(player: matt, team: blues)
+join1 = PlayerTeam.find_or_create_by(player: alex, team: blue)
+join2 = PlayerTeam.find_or_create_by(player: fred, team: red)
+join3 = PlayerTeam.find_or_create_by(player: sarah, team: blue)
+join4 = PlayerTeam.find_or_create_by(player: matt, team: yellow)
+join5 = PlayerTeam.find_or_create_by(player: james, team: white)
+join6 = PlayerTeam.find_or_create_by(player: sydney, team: red)
+join7 = PlayerTeam.find_or_create_by(player: aaron, team: green)
+join8 = PlayerTeam.find_or_create_by(player: matt2, team: blue)
