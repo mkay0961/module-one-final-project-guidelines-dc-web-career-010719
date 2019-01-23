@@ -10,6 +10,9 @@ array = []
  system "clear"
  if input == "exit"
    exit_program
+
+ elsif input.downcase == "restart"
+   get_menu
  elsif input.length > 0
    menu_options(array[input.to_i-1])
  # elsif input
