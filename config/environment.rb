@@ -11,6 +11,7 @@ require "sinatra/activerecord"
 require 'require_all'
 
 require 'colorize'
+require 'launchy'
 
 require_rel "../app/UI"
 
