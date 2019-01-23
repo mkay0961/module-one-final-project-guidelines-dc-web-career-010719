@@ -28,8 +28,6 @@ results = Player.all.select{|player| player.full_name.include?(input)}
    player_menu
   end
 
-# binding.pry
-
  puts "Select your player by number"
  num = gets.chomp
  selected = x[num.to_i-1]
