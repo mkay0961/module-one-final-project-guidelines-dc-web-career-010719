@@ -5,13 +5,14 @@
 # require_all 'lib'
 
 require "bundler/setup"
-
 require "sinatra/activerecord"
-
 require 'require_all'
-
 require 'colorize'
 require 'launchy'
+require 'net/http'
+require 'open-uri'
+require 'json'
+require 'pry'
 
 require_rel "../app/UI"
 

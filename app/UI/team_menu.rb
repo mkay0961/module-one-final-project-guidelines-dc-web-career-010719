@@ -30,8 +30,8 @@ def menu_options(team)
   puts "2." + " Where ".red + "do they play?" #city #state #venue
   puts "3. What" + " league ".red + "are they in?"
   puts "4. What" + " division ".red + "are they in?"
-  puts "5. What is there" + " phone number?".red
-  puts "6. What is there" + " website?".red
+  puts "5. What is their" + " phone number?".red
+  puts "6. What is their store" + " website?".red
   puts "7." + " Restart ".red + "program"
   puts "8." + " Exit ".red + "the program"
 
@@ -122,13 +122,13 @@ end
 
 def get_link(team)
   puts "The Website for the #{team.name} is #{team.link}."
-  puts "Would you like to open there website (Y/N)"
+  puts "Would you like to open their store website (Y/N)"
   input = gets.chomp.downcase
   if input == "y" || input == "yes"
     puts "opening..."
     sleep(0.5)
-    #Launchy.open(team.link)
-    Launchy.open("google.com")
+    Launchy.open(team.link)
+    #Launchy.open("google.com")
   end
 end
 
