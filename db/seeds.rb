@@ -50,7 +50,8 @@ hash["team_all_season"]["queryResults"]["row"].each do |team|
   division = team["division_full"]
   link = team["store_url"]
   phonenumber  = team["phone_number"]
-  Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber)
+  teamid = team["team_id"]
+  Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber, teamid: teamid)
 end
 
 players = GetPlayers.new
@@ -72,16 +73,68 @@ hash2["search_player_all"]["queryResults"]["row"].each do |player|
   twitter = hash3["twitter_id"]
   throw = hash3["throws"]
   nickname =hash3["name_nick"]
-
+  playerid = hash3["player_id"]
   heightInch = hash3["height_inches"]
   heightFeet = hash3["height_feet"]
   height = (heightFeet.to_i*12)+ heightInch.to_i
   puts count
-  Player.find_or_create_by(full_name: full_name, position: position, jersey_number: jersey_number, height: height, age: age, bats: bats, twitterid: twitter, throws: throw, nickname:nickname)
-  
+  Player.find_or_create_by(full_name: full_name, position: position, jersey_number: jersey_number, height: height, age: age, bats: bats, twitterid: twitter, throws: throw, nickname:nickname, playerid: playerid)
   count +=1
-
 end
+
+  count2 =0
+  Player.all.each do |player|
+    #puts player.playerid
+    url = "http://lookup-service-prod.mlb.com/json/named.player_teams.bam?season='2018'&player_id="
+    url +=player.playerid
+    #binding.pry
+    uri = URI.parse(url)
+    response = Net::HTTP.get_response(uri)
+    x = JSON.parse(response.body)
+    #binding.pry
+
+    if x["player_teams"]["queryResults"]["row"].class == Hash
+      if x["player_teams"]["queryResults"]["row"]["sport_code"] == "mlb"
+        #puts"GOT MLB one in array"
+        team = Team.find_by(teamid: x["player_teams"]["queryResults"]["row"]["team_id"])
+        PlayerTeam.find_or_create_by(player: player, team: team)
+      # else
+        #puts"NOT MLB"
+      end
+    elsif x["player_teams"]["queryResults"]["row"].class == Array
+
+      x["player_teams"]["queryResults"]["row"].each do |element|
+        if element["sport_code"] == "mlb"
+          #puts"GOT MLB MULTI array"
+          specteam = Team.find_by(teamid: element["team_id"])
+          PlayerTeam.find_or_create_by(player: player, team: specteam)
+        # else
+          #puts"NOT MLB"
+        end
+      end
+    end
+    puts "second count #{count2}"
+    count2+=1
+end
+
+
+    # x["player_teams"]["queryResults"]["row"].each do |element|
+    #   if element["sport_code"] == "mlb"
+    #     puts"sdf"
+    #   else
+    #     puts"hello"
+    #   end
+    # end
+
+
+
+
+
+
+
+
+
+
 
 
 
