@@ -23,22 +23,22 @@ def menu_options(team)
 
   input = gets.chomp
   case input
-  when "1" || "1."
+  when "1" , "1."
     system "clear"
     getplayers(team)
-  when "2" || "2."
+  when "2" , "2."
     system "clear"
     get_city_venue_state(team)
-  when "3" || "3."
+  when "3" , "3."
     system "clear"
     get_league(team)
-  when "4" || "4."
+  when "4" ,"4."
     system "clear"
     get_division(team)
-  when "5" || "5."
+  when "5" , "5."
     system "clear"
     get_phonenumber(team)
-  when "6" || "6."
+  when "6",  "6."
     system "clear"
     get_link(team)
   end
