@@ -183,12 +183,7 @@ end
 
 
 
-<<<<<<< HEAD
 #message
 
 
-=======
-
-#message
->>>>>>> 2fb30179246b1975c9e5fbbb0bb47dbc6c5fa910
 get_menu

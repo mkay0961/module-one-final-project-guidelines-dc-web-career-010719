@@ -17,12 +17,8 @@ end
 def menu_options(team)
   puts "1. The chosen year roster"
   input = gets.chomp
-<<<<<<< HEAD
-  if input == "1"
-=======
   if input == "1" || input == "1."
     system "clear"
->>>>>>> 2fb30179246b1975c9e5fbbb0bb47dbc6c5fa910
     getplayers(team)
   end
 
