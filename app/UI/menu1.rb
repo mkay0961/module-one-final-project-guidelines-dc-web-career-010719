@@ -3,10 +3,11 @@ def get_menu
   1. Teams
   2. Players"
   input = gets.chomp
-  if input == "1" || input == "1."
+  if input == "1" || input == "1." || input.downcase.include?("team")
     team_menu
-  elsif input == "2" || input == "2."
+  elsif input == "2" || input == "2." || input.downcase.include?("player")
     player_menu
-  else puts "Input 1 or 2"
+  else puts "That is not a valid input. Try again."
+    get_menu
   end
 end
