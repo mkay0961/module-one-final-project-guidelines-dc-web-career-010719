@@ -7,8 +7,12 @@ results = Player.all.select{|player| player.full_name.include?(input)}
 
   if results.length > 0
    x = results.map{|player| player}
+   puts "searching..."
+   sleep(0.5)
+   puts "Select player:"
    x.each_with_index{|player, index| puts  "#{index+1}. #{player.full_name}"}
   else
+    puts "searching..."
    puts "no players found"
   end
 # binding.pry
