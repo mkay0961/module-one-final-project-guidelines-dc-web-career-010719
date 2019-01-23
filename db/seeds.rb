@@ -21,19 +21,22 @@ end
 
 class GetPlayers
 
-  URL = ""
-  def get_teams
+  URL = "http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='%25'"
+  def get_players
     uri = URI.parse(URL)
     response = Net::HTTP.get_response(uri)
     response.body
   end
 
   def parse_JSON
-    return teams = JSON.parse(self.get_teams)
+    return teams = JSON.parse(self.get_players)
   end
 
 
 end
+
+
+
 
 
 teams = GetTeams.new
@@ -49,6 +52,45 @@ hash["team_all_season"]["queryResults"]["row"].each do |team|
   phonenumber  = team["phone_number"]
   Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber)
 end
+
+players = GetPlayers.new
+hash2 = players.parse_JSON
+count = 0
+hash2["search_player_all"]["queryResults"]["row"].each do |player|
+  id = player["player_id"]
+  url = "http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id=" + id
+  uri = URI.parse(url)
+  response = Net::HTTP.get_response(uri)
+  player = JSON.parse(response.body)
+  hash3 = player["player_info"]["queryResults"]["row"]
+
+  full_name = hash3["name_display_first_last"]
+  position = hash3["primary_position_txt"]
+  jersey_number = hash3["jersey_number"].to_i
+  age = hash3["age"].to_i
+  bats = hash3["bats"]
+  twitter = hash3["twitter_id"]
+  throw = hash3["throws"]
+  nickname =hash3["name_nick"]
+
+  heightInch = hash3["height_inches"]
+  heightFeet = hash3["height_feet"]
+  height = (heightFeet.to_i*12)+ heightInch.to_i
+  puts count
+  Player.find_or_create_by(full_name: full_name, position: position, jersey_number: jersey_number, height: height, age: age, bats: bats, twitterid: twitter, throws: throw, nickname:nickname)
+  
+  count +=1
+
+end
+
+
+
+
+
+
+
+
+
 #binding.pry
 
 

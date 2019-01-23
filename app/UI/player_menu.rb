@@ -1,7 +1,7 @@
 def player_menu
 puts "Which player would you like to know about?"
 puts "Type a portion of their full name, or exit/restart:"
-input = gets.chomp
+input = gets.chomp.downcase
 if input.downcase == "exit"
   exit_program
 
@@ -10,7 +10,7 @@ elsif
   get_menu
 else
 
-results = Player.all.select{|player| player.full_name.include?(input)}
+results = Player.all.select{|player| player.full_name.downcase.include?(input)}
 
   if results.length > 0
    x = results.map{|player| player}
@@ -52,8 +52,8 @@ def player_info_menu(player)
   puts "7. Which hand do they" + " throw ".red + "from?"
   puts "8. What is their" + " nickname ".red + "?"
   puts "9. What is their" + " twitter ".red + "handle?"
-  puts "10. Restart"
-  puts "11. Quit"
+  puts "10." + " Restart ".red + "program"
+  puts "11." + " Exit ".red + "the program"
 
   input = gets.chomp
   case input.downcase
@@ -105,7 +105,7 @@ def player_info_menu(player)
     # puts "#{player.full_name} is on twitter at  #{player.twitterid}."
   when "10", "10.", "restart"
     get_menu
-  when "11", "11.", "quit"
+  when "11", "11.", "exit"
     exit_program
   end
 end
