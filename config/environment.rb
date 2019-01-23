@@ -10,6 +10,8 @@ require "sinatra/activerecord"
 
 require 'require_all'
 
+require 'colorize'
+
 require_rel "../app/UI"
 
 Bundler.require
