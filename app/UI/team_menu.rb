@@ -17,7 +17,12 @@ end
 def menu_options(team)
   puts "1. The chosen year roster"
   input = gets.chomp
+<<<<<<< HEAD
   if input == "1"
+=======
+  if input == "1" || input == "1."
+    system "clear"
+>>>>>>> 2fb30179246b1975c9e5fbbb0bb47dbc6c5fa910
     getplayers(team)
   end
 
@@ -25,7 +30,7 @@ end
 
 def getplayers(team)
   # binding.pry
-  puts "\n\n The players on the #{team.name} are: "
+  puts "The players on the #{team.name} are: "
   team.players.each_with_index do |player,index|
     puts "#{index+1}. #{player.full_name}"
   end
