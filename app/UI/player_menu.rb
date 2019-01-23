@@ -1,8 +1,15 @@
 def player_menu
 puts "Which player would you like to know about?"
-puts "Type a portion of their full name:"
+puts "Type a portion of their full name, or exit/restart:"
 input = gets.chomp
- # Player.all.each_with_index{|player, index| puts "#{index+1}. #{player.full_name}"}
+if input.downcase == "exit"
+  exit_program
+
+elsif
+  input.downcase == "restart"
+  get_menu
+else
+
 results = Player.all.select{|player| player.full_name.include?(input)}
 
   if results.length > 0
@@ -18,6 +25,7 @@ results = Player.all.select{|player| player.full_name.include?(input)}
    system "clear"
    player_menu
   end
+
 # binding.pry
 
  puts "Select your player by number"
@@ -25,11 +33,12 @@ results = Player.all.select{|player| player.full_name.include?(input)}
  selected = x[num.to_i-1]
  puts selected.full_name
  player_info_menu(selected)
-
+end
 end
 
 
 def player_info_menu(player)
+  system "clear"
 puts "\n\n"
   puts "What would you like to know about #{player.full_name}?"
   puts "\n"
@@ -44,28 +53,34 @@ puts "\n\n"
   puts "7. Which hand do they" + " throw ".red + "from?"
   puts "8. What is their" + " nickname ".red + "?"
   puts "9. What is their" + " twitter ".red + "handle?"
+  puts "10. Restart"
+  puts "11. Quit"
 
   input = gets.chomp
-  case input
-  when "1","team"
+  case input.downcase
+  when "1", "1.", "team"
     puts "#{player.full_name} played for:"
     player.teams.each {|team| puts"#{team.name}"}
-  when "2", "position"
+  when "2", "2.", "position"
     puts "#{player.full_name} primarily played #{player.position}"
-  when "3", "number"
+  when "3", "3.", "number"
     puts "#{player.full_name} wore the number #{player.jersey_number}"
-  when "4", "tall"
+  when "4", "4.", "tall"
     puts "#{player.full_name} is #{player.height} inches tall."
-  when "5", "old"
+  when "5", "5.", "old"
     puts "#{player.full_name} was #{player.age}."
-  when "6", "bat"
+  when "6", "6.", "bat"
     puts "#{player.full_name} bats #{player.bats}."
-  when "7", "throw"
+  when "7", "7.", "throw"
     puts "#{player.full_name} throws #{player.throws}."
-  when "8", "nickname"
+  when "8", "8.", "nickname"
     puts "#{player.full_name} also goes by #{player.nickname}."
-  when "9", "twitter"
+  when "9", "9.", "twitter"
     puts "#{player.full_name} is on twitter at  #{player.twitterid}."
+  when "10", "10.", "restart"
+    get_menu
+  when "11", "11.", "quit"
+    exit_program
   end
 
 end
