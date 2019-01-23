@@ -18,6 +18,24 @@ class GetTeams
 
 end
 
+
+class GetPlayers
+
+  URL = ""
+  def get_teams
+    uri = URI.parse(URL)
+    response = Net::HTTP.get_response(uri)
+    response.body
+  end
+
+  def parse_JSON
+    return teams = JSON.parse(self.get_teams)
+  end
+
+
+end
+
+
 teams = GetTeams.new
 hash = teams.parse_JSON
 hash["team_all_season"]["queryResults"]["row"].each do |team|
@@ -30,7 +48,6 @@ hash["team_all_season"]["queryResults"]["row"].each do |team|
   link = team["store_url"]
   phonenumber  = team["phone_number"]
   Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber)
-  #binding.pry
 end
 #binding.pry
 
