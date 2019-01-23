@@ -14,6 +14,9 @@ results = Player.all.select{|player| player.full_name.include?(input)}
   else
     puts "searching..."
    puts "no players found"
+   sleep(2)
+   system "clear"
+   player_menu
   end
 # binding.pry
 
