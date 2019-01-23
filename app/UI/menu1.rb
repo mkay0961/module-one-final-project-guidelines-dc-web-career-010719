@@ -18,3 +18,8 @@ def get_menu
     get_menu
   end
 end
+
+
+def exit_program
+  puts "GOODBYE!!!"
+end

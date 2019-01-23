@@ -17,9 +17,9 @@ def menu_options(team)
   puts "3. What league are they in?"
   puts "4. What division are they in?"
   puts "5. What is there phone number?"
-  puts "6. What is there Website?"
-
-
+  puts "6. What is there website?"
+  puts "7. Restart program"
+  puts "8. Exit the program"
 
   input = gets.chomp
   case input
@@ -41,7 +41,14 @@ def menu_options(team)
   when "6",  "6."
     system "clear"
     get_link(team)
+  when "restart",  "7", "7."
+    system "clear"
+    get_menu
+  when "exit",  "8", "8."
+    system "clear"
+    exit_program
   end
+
 end
 
 def getplayers(team)
