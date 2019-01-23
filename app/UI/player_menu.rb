@@ -35,7 +35,7 @@ puts "\n\n"
   puts "\n"
   puts "Select by index, or enter the" + " keyword".red
   puts "\n"
-  puts "1. What" + " team ".red + "did he play for this season?"
+  puts "1. What" + " teams ".red + "have they played for?"
   puts "2. What" + " position ".red + "do they play?"
   puts "3. What is their jersey" + " number?".red
   puts "4. How" + " tall ".red + "are they?"
@@ -48,9 +48,11 @@ puts "\n\n"
   input = gets.chomp
   case input
   when "1"
-    puts "#{player.full_name} played for #{player.teams[0].name}"
+    puts "#{player.full_name} played for:"
+    player.teams.each {|team| puts"#{team.name}"}
   when "team"
-    puts "#{player.full_name} played for #{player.teams[0].name}"
+    puts "#{player.full_name} played for:"
+    player.teams.each {|team| puts"#{team.name}"}
   when "2"
     puts "#{player.full_name} primarily played #{player.position}"
   when "position"
