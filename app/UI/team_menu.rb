@@ -6,42 +6,58 @@ array = []
    array << team
  end
  input = gets.chomp
+ #binding.pry
  system "clear"
- puts "What do you want to know about the #{array[input.to_i-1].name}"
- menu_options(array[input.to_i-1])
+ if input == "exit"
+   exit_program
+ elsif input.length > 0
+   puts "What do you want to know about the #{array[input.to_i-1].name}"
+   menu_options(array[input.to_i-1])
+ # elsif input
+ #   puts "That is not a valid input. Try again."
+ #   sleep(1.5)
+ #   system "clear"
+ #   team_menu
+  end
 end
 
 def menu_options(team)
-  puts "1. The chosen year roster"
-  puts "2. Where do they play?" #city #state #venue
-  puts "3. What league are they in?"
-  puts "4. What division are they in?"
-  puts "5. What is there phone number?"
-  puts "6. What is there website?"
-  puts "7. Restart program"
-  puts "8. Exit the program"
+  puts "1. The chosen year" + " roster".red
+  puts "2." + " Where ".red + "do they play?" #city #state #venue
+  puts "3. What" + " league ".red + "are they in?"
+  puts "4. What" + " division ".red + "are they in?"
+  puts "5. What is there" + " phone number?".red
+  puts "6. What is there" + " website?".red
+  puts "7." + " Restart ".red + "program"
+  puts "8." + " Exit ".red + "the program"
 
   input = gets.chomp
   case input
-  when "1" , "1."
+  when "1" , "1.", "roster"
     system "clear"
     getplayers(team)
-  when "2" , "2."
+    more(team)
+  when "2" , "2." , "where"
     system "clear"
     get_city_venue_state(team)
-  when "3" , "3."
+    more(team)
+  when "3" , "3.", "league"
     system "clear"
     get_league(team)
-  when "4" ,"4."
+    more(team)
+  when "4" ,"4." ,"division"
     system "clear"
     get_division(team)
-  when "5" , "5."
+    more(team)
+  when "5", "5.", "phone number"
     system "clear"
     get_phonenumber(team)
-  when "6",  "6."
+    more(team)
+  when "6",  "6.", "website"
     system "clear"
     get_link(team)
-  when "restart",  "7", "7."
+    more(team)
+  when "restart",  "7", "7.", "Restart"
     system "clear"
     get_menu
   when "exit",  "8", "8."
@@ -86,7 +102,20 @@ def get_link(team)
     sleep(0.5)
     #Launchy.open(team.link)
     Launchy.open("google.com")
-  else
-    puts "this should do something"
+  end
+end
+
+def more(team)
+  puts "\nWould you like to find out more about the #{team.name}?"
+  puts "("+" Y ".red + "for yes," + " Exit ".red + "to exit," + " D ".red + "for a different team)"
+  input = gets.chomp.downcase
+  if input == "y" || input == "yes"
+    system "clear"
+    menu_options(team)
+  elsif input == "exit"
+    exit_program
+  elsif input == "d"
+    system "clear"
+    team_menu
   end
 end
