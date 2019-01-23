@@ -36,27 +36,27 @@ def menu_options(team)
   when "1" , "1.", "roster"
     system "clear"
     getplayers(team)
-    more(team)
+    moreteam(team)
   when "2" , "2." , "where"
     system "clear"
     get_city_venue_state(team)
-    more(team)
+    moreteam(team)
   when "3" , "3.", "league"
     system "clear"
     get_league(team)
-    more(team)
+    moreteam(team)
   when "4" ,"4." ,"division"
     system "clear"
     get_division(team)
-    more(team)
+    moreteam(team)
   when "5", "5.", "phone number"
     system "clear"
     get_phonenumber(team)
-    more(team)
+    moreteam(team)
   when "6",  "6.", "website"
     system "clear"
     get_link(team)
-    more(team)
+    moreteam(team)
   when "restart",  "7", "7.", "Restart"
     system "clear"
     get_menu
@@ -105,7 +105,7 @@ def get_link(team)
   end
 end
 
-def more(team)
+def moreteam(team)
   puts "\nWould you like to find out more about the #{team.name}?"
   puts "("+" Y ".red + "for yes," + " Exit ".red + "to exit," + " D ".red + "for a different team)"
   input = gets.chomp.downcase

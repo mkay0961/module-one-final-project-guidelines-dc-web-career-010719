@@ -14,8 +14,10 @@ results = Player.all.select{|player| player.full_name.include?(input)}
 
   if results.length > 0
    x = results.map{|player| player}
+   system "clear"
    puts "searching..."
    sleep(0.5)
+  system "clear"
    puts "Select player:"
    x.each_with_index{|player, index| puts  "#{index+1}. #{player.full_name}"}
   else
@@ -39,7 +41,6 @@ end
 
 def player_info_menu(player)
   system "clear"
-puts "\n\n"
   puts "What would you like to know about #{player.full_name}?"
   puts "\n"
   puts "Select by index, or enter the" + " keyword".red
@@ -59,28 +60,107 @@ puts "\n\n"
   input = gets.chomp
   case input.downcase
   when "1", "1.", "team"
-    puts "#{player.full_name} played for:"
-    player.teams.each {|team| puts"#{team.name}"}
+    system "clear"
+    get_team(player)
+    moreplayer(player)
+    # puts "#{player.full_name} played for:"
+    # player.teams.each {|team| puts"#{team.name}"}
   when "2", "2.", "position"
-    puts "#{player.full_name} primarily played #{player.position}"
+    system "clear"
+    get_position(player)
+    moreplayer(player)
+    # puts "#{player.full_name} primarily played #{player.position}"
   when "3", "3.", "number"
-    puts "#{player.full_name} wore the number #{player.jersey_number}"
+    system "clear"
+    get_jersey_num(player)
+    moreplayer(player)
+    # puts "#{player.full_name} wore the number #{player.jersey_number}"
   when "4", "4.", "tall"
-    puts "#{player.full_name} is #{player.height} inches tall."
+    system "clear"
+    get_height(player)
+    moreplayer(player)
+    # puts "#{player.full_name} is #{player.height} inches tall."
   when "5", "5.", "old"
-    puts "#{player.full_name} was #{player.age}."
+    system "clear"
+    get_age(player)
+    moreplayer(player)
+    # puts "#{player.full_name} was #{player.age}."
   when "6", "6.", "bat"
-    puts "#{player.full_name} bats #{player.bats}."
+    system "clear"
+    get_bats(player)
+    moreplayer(player)
+    # puts "#{player.full_name} bats #{player.bats}."
   when "7", "7.", "throw"
-    puts "#{player.full_name} throws #{player.throws}."
+    system "clear"
+    get_throws(player)
+    moreplayer(player)
+    # puts "#{player.full_name} throws #{player.throws}."
   when "8", "8.", "nickname"
-    puts "#{player.full_name} also goes by #{player.nickname}."
+    system "clear"
+    get_nickname(player)
+    moreplayer(player)
+    # puts "#{player.full_name} also goes by #{player.nickname}."
   when "9", "9.", "twitter"
-    puts "#{player.full_name} is on twitter at  #{player.twitterid}."
+    system "clear"
+    get_twitter(player)
+    moreplayer(player)
+    # puts "#{player.full_name} is on twitter at  #{player.twitterid}."
   when "10", "10.", "restart"
     get_menu
   when "11", "11.", "quit"
     exit_program
   end
+end
 
+
+def get_team(player)
+  puts "#{player.full_name} played for:"
+  player.teams.each {|team| puts"#{team.name}"}
+end
+
+def get_position(player)
+  puts "#{player.full_name} primarily played #{player.position}"
+end
+
+def get_jersey_num(player)
+  puts "#{player.full_name} wore the number #{player.jersey_number}"
+end
+
+def get_height(player)
+  puts "#{player.full_name} is #{player.height} inches tall."
+end
+
+def get_bats(player)
+  puts "#{player.full_name} bats #{player.bats}."
+end
+
+def get_age(player)
+  puts "#{player.full_name} was #{player.age}."
+end
+
+def get_throws(player)
+  puts "#{player.full_name} throws #{player.throws}."
+end
+
+def get_nickname(player)
+  puts "#{player.full_name} also goes by #{player.nickname}."
+end
+
+def get_twitter(player)
+  puts "#{player.full_name} is on twitter at  #{player.twitterid}."
+end
+
+def moreplayer(player)
+  puts "\nWould you like to find out more about #{player.full_name}?"
+  puts "("+" Y ".red + "for yes," + " Exit ".red + "to exit," + " D ".red + "for a different player)"
+  input = gets.chomp.downcase
+  if input == "y" || input == "yes"
+    system "clear"
+    player_info_menu(player)
+  elsif input == "exit"
+    exit_program
+  elsif input == "d"
+    system "clear"
+    player_menu
+  end
 end
