@@ -152,7 +152,10 @@ end
 
 def moreplayer(player)
   puts "\nWould you like to find out more about #{player.full_name}?"
-  puts "("+" Y ".red + "for yes," + " Exit ".red + "to exit," + " D ".red + "for a different player)"
+  puts "Y ".red + "for yes"
+  puts "Exit ".red + "to exit"
+  puts "D ".red + "for a different player"
+  puts "Restart ".red + "to select a new team or player"
   input = gets.chomp.downcase
   if input == "y" || input == "yes"
     system "clear"
@@ -162,5 +165,8 @@ def moreplayer(player)
   elsif input == "d"
     system "clear"
     player_menu
+  elsif input == "restart"
+    system "clear"
+    get_menu    
   end
 end

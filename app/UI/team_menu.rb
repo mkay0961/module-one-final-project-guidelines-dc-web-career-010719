@@ -11,7 +11,6 @@ array = []
  if input == "exit"
    exit_program
  elsif input.length > 0
-   puts "What do you want to know about the #{array[input.to_i-1].name}"
    menu_options(array[input.to_i-1])
  # elsif input
  #   puts "That is not a valid input. Try again."
@@ -22,6 +21,7 @@ array = []
 end
 
 def menu_options(team)
+  puts "What do you want to know about the #{team.name}"
   puts "1. The chosen year" + " roster".red
   puts "2." + " Where ".red + "do they play?" #city #state #venue
   puts "3. What" + " league ".red + "are they in?"
@@ -36,7 +36,7 @@ def menu_options(team)
   when "1" , "1.", "roster"
     system "clear"
     getplayers(team)
-    moreteam(team)
+    #moreteam(team)
   when "2" , "2." , "where"
     system "clear"
     get_city_venue_state(team)
@@ -69,10 +69,33 @@ end
 
 def getplayers(team)
   # binding.pry
+
   puts "The players on the #{team.name} are: "
+  array = []
   team.players.each_with_index do |player,index|
     puts "#{index+1}. #{player.full_name}"
+    array << player
   end
+  puts "\nWould you like to know more about a player or the team?"
+  puts "Team ".red + "for more team info"
+  puts "Exit ".red + "to exit,"
+  puts "Player index ".red + "for a player"
+  puts "Restart ".red + "to select a new team or player"
+  input = gets.chomp.downcase
+  if input == "exit"
+    exit_program
+  elsif input == "team"
+    system "clear"
+    menu_options(team)
+  elsif input == "restart"
+    system "clear"
+    get_menu
+  elsif (0..array.length).include?(input.to_i)
+    player_info_menu(array[input.to_i-1])
+  end
+
+
+
 end
 
 def get_city_venue_state(team)
@@ -107,7 +130,10 @@ end
 
 def moreteam(team)
   puts "\nWould you like to find out more about the #{team.name}?"
-  puts "("+" Y ".red + "for yes," + " Exit ".red + "to exit," + " D ".red + "for a different team)"
+  puts "Y ".red + "for yes"
+  puts "Exit ".red + "to exit"
+  puts "D ".red + "for a different team"
+  puts "Restart ".red + "to select a new team or player"
   input = gets.chomp.downcase
   if input == "y" || input == "yes"
     system "clear"
@@ -117,5 +143,8 @@ def moreteam(team)
   elsif input == "d"
     system "clear"
     team_menu
+  elsif input == "restart"
+    system "clear"
+    get_menu
   end
 end
