@@ -119,10 +119,10 @@ def get_team(player)
     array << team
   end
   puts "\nWould you like to know more about a team or the player?"
-  puts "Player ".red + "for more player info"
-  puts "Exit ".red + "to exit,"
-  puts "Team index ".red + "for a team"
-  puts "Restart ".red + "to select a new team or player"
+  puts "Player ".red + "for more player info."
+  puts "Team index ".red + "for a team."
+  puts "Restart ".red + "to select a new team or player."
+  puts "Exit ".red + "to exit the database."
   input = gets.chomp.downcase
   if input == "exit"
     exit_program
