@@ -9,7 +9,11 @@ elsif
   input.downcase == "restart"
   get_menu
 else
+  results(input)
+end
+end
 
+def results(input)
 results = Player.all.select{|player| player.full_name.downcase.include?(input)}
 
   if results.length > 0
@@ -33,7 +37,7 @@ results = Player.all.select{|player| player.full_name.downcase.include?(input)}
     puts "Invalid input"
     sleep(0.75)
     system "clear"
-  player_menu
+  results(input)
   else
   selected = x[num.to_i-1]
   puts selected.full_name
@@ -41,7 +45,6 @@ results = Player.all.select{|player| player.full_name.downcase.include?(input)}
   end
 end
 
-end
 
 
 
