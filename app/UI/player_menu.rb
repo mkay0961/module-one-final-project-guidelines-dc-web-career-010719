@@ -27,7 +27,7 @@ results = Player.all.select{|player| player.full_name.downcase.include?(input)}
    system "clear"
    player_menu
   end
-end 
+end
  puts "Select your player by number"
  num = gets.chomp
  selected = x[num.to_i-1]
@@ -116,11 +116,15 @@ end
 
 
 def get_team(player)
+  if player.teams.length == 0
+    puts "#{player.full_name} was not on an MLB team this season."
+  else
   puts "In 2018, #{player.full_name} played for:"
   array = []
   player.teams.each_with_index do |team,index|
     puts "#{index+1}. #{team.name}"
     array << team
+    end
   end
   puts "\nWould you like to know more about a team or the player?"
   puts "Player ".red + "for more player info."
@@ -168,11 +172,19 @@ def get_throws(player)
 end
 
 def get_nickname(player)
+  if player.nickname.length == 0
+    puts "#{player.full_name} does not have a nickname in our database."
+  else
   puts "#{player.full_name} also goes by #{player.nickname}."
+end
 end
 
 def get_twitter(player)
+  if player.twitterid.length == 0
+    puts "#{player.full_name} does not have a twitter account in our database."
+  else
   puts "#{player.full_name} is on twitter at  #{player.twitterid}."
+end
 end
 
 def moreplayer(player)
