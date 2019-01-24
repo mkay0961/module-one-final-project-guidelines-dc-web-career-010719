@@ -188,4 +188,5 @@ end
 # message
 puts "Press enter key to begin!"
 gets
+# message
 get_menu

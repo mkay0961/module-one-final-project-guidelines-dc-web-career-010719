@@ -140,8 +140,17 @@ def get_team(player)
   elsif input == "restart"
     system "clear"
     get_menu
-  elsif (0..array.length).include?(input.to_i)
+  elsif input == ""
+    puts "Not a valid input. Please enter a valid keyword."
+      sleep(2)
+      system "clear"
+      get_team(player)
+  elsif (1..array.length).include?(input.to_i)
     menu_options(array[input.to_i-1])
+  else puts "Not a valid input. Please enter a valid keyword."
+    sleep(2)
+    system "clear"
+    get_team(player)
   end
 
 
