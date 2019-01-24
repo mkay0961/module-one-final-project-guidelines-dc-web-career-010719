@@ -27,14 +27,24 @@ results = Player.all.select{|player| player.full_name.downcase.include?(input)}
    system "clear"
    player_menu
   end
+  puts "Select your player by number"
+  num = gets.chomp
+  if num.to_i == 0 || num.to_i > results.length
+    puts "Invalid input"
+    sleep(0.75)
+    system "clear"
+  player_menu
+  else
+  selected = x[num.to_i-1]
+  puts selected.full_name
+  player_info_menu(selected)
+  end
 end
- puts "Select your player by number"
- num = gets.chomp
- selected = x[num.to_i-1]
- puts selected.full_name
- player_info_menu(selected)
 
 end
+
+
+
 
 
 def player_info_menu(player)
