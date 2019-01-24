@@ -140,7 +140,10 @@ def get_link(team)
   if input == "y" || input == "yes"
     puts "opening..."
     sleep(0.5)
+    system "clear"
     Launchy.open(team.link)
+  else
+    system "clear"
     #Launchy.open("google.com")
   end
 end
