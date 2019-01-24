@@ -58,7 +58,7 @@ def menu_options(team)
     system "clear"
     get_division(team)
     moreteam(team)
-  when "5", "5.", "phone number"
+  when "5", "5.", "phone"
     system "clear"
     get_phonenumber(team)
     moreteam(team)
