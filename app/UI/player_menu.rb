@@ -170,11 +170,11 @@ def get_team(player)
 end
 
 def get_position(player)
-  puts "#{player.full_name} primarily played #{player.position}"
+  puts "#{player.full_name} primarily played #{player.position}."
 end
 
 def get_jersey_num(player)
-  puts "#{player.full_name} wore the number #{player.jersey_number}"
+  puts "#{player.full_name} wore the number #{player.jersey_number}."
 end
 
 def get_height(player)
@@ -205,8 +205,8 @@ def get_twitter(player)
   if player.twitterid.length == 0
     puts "#{player.full_name} does not have a twitter account in our database."
   else
-  puts "#{player.full_name} is on twitter at  #{player.twitterid}."
-end
+    puts "#{player.full_name} is on twitter at  #{player.twitterid}."
+  end
 end
 
 def moreplayer(player)

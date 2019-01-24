@@ -15,3 +15,4 @@ gem "launchy"
 gem 'tty-prompt'
 gem 'tty-font'
 gem 'pastel'
+gem 'pry-rescue'
