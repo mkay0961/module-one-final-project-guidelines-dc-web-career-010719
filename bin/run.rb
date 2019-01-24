@@ -183,7 +183,9 @@ end
 
 
 
-#message
 
 
+message
+puts "Press any key to begin!"
+gets
 get_menu

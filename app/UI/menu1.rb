@@ -1,5 +1,7 @@
 def get_menu
   system "clear"
+  puts "This app allows you to search for information about players and their \nteams during the 2018 Season of Major League Baseball!"
+  puts "\n\n"
   puts "What would you like to know more about?
   1. Teams
   2. Players
@@ -26,5 +28,6 @@ end
 
 
 def exit_program
-  puts "GOODBYE!!!"
+  puts "Thank you for using the MLB Database!"
+  sleep(2)
 end
