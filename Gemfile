@@ -12,3 +12,6 @@ gem "database_cleaner"
 gem "require_all"
 gem "colorize"
 gem "launchy"
+gem 'tty-prompt'
+gem 'tty-font'
+gem 'pastel'

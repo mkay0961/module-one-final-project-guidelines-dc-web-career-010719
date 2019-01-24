@@ -13,6 +13,8 @@ require 'net/http'
 require 'open-uri'
 require 'json'
 require 'pry'
+require 'tty-font'
+require 'tty-prompt'
 
 require_rel "../app/UI"
 

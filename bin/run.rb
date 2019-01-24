@@ -186,7 +186,10 @@ end
 
 
 # message
+# pastel = Pastel.new
+# font = TTY::Font.new(:doom)
+# puts pastel.bright_red(font.write("Press enter key to begin!"))
 puts "Press enter key to begin!"
 gets
-# message
+message
 get_menu
