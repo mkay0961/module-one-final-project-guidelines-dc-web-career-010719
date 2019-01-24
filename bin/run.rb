@@ -185,7 +185,7 @@ end
 
 
 
-message
-puts "Press any key to begin!"
+# message
+puts "Press enter key to begin!"
 gets
 get_menu

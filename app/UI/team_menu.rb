@@ -13,8 +13,12 @@ array = []
 
  elsif input.downcase == "restart"
    get_menu
- elsif input.length > 0
+ elsif (1..30).include?(input.to_i)
    menu_options(array[input.to_i-1])
+ else system "clear"
+   puts "Not a valid input. Please enter the index of the team you are searching for."
+   sleep(2)
+team_menu
  # elsif input
  #   puts "That is not a valid input. Try again."
  #   sleep(1.5)
@@ -25,13 +29,14 @@ end
 
 def menu_options(team)
   system "clear"
-  puts "What do you want to know about the #{team.name}"
-  puts "1. The chosen year" + " roster".red
+  puts "What do you want to know about The #{team.name}?"
+  puts "\n Enter the" + " keyword ".red + "or index of your choice"
+  puts "1. Which players appeared on the" + " roster".red + " in 2018?"
   puts "2." + " Where ".red + "do they play?" #city #state #venue
   puts "3. What" + " league ".red + "are they in?"
   puts "4. What" + " division ".red + "are they in?"
-  puts "5. What is their" + " phone number?".red
-  puts "6. What is their store" + " website?".red
+  puts "5. What is the front office" + " phone ".red + "number?"
+  puts "6. What is the url to their" + " website?".red
   puts "7." + " Restart ".red + "program"
   puts "8." + " Exit ".red + "the program"
 
@@ -67,6 +72,9 @@ def menu_options(team)
   when "exit",  "8", "8."
     system "clear"
     exit_program
+  else puts "Not a valid input. Try again."
+    sleep (1)
+    menu_options(team)
   end
 
 end
@@ -80,22 +88,27 @@ def getplayers(team)
     puts "#{index+1}. #{player.full_name}"
     array << player
   end
-  puts "\nWould you like to know more about a player or the team?"
-  puts "Team ".red + "for more team info"
-  puts "Exit ".red + "to exit,"
-  puts "Player index ".red + "for a player"
-  puts "Restart ".red + "to select a new team or player"
+  # puts "\nWould you like to know more about a player or the team?"
+  puts "\nTo see information about one of these players, enter their index now."
+  puts "\nOtherwise:\nType " + "more".red + " to see information about the #{team.name}."
+  puts "To select a new team or player, enter" + " restart".red
+  puts "Enter" + " exit ".red + "to leave the database."
   input = gets.chomp.downcase
+
   if input == "exit"
     exit_program
-  elsif input == "team"
+  elsif input == "more"
     system "clear"
     menu_options(team)
   elsif input == "restart"
     system "clear"
     get_menu
-  elsif (0..array.length).include?(input.to_i)
+  elsif (1..array.length).include?(input.to_i)
     player_info_menu(array[input.to_i-1])
+  else puts "Not a valid input. Try again."
+  sleep(1)
+  system "clear"
+  getplayers(team)
   end
 
 
@@ -133,22 +146,26 @@ def get_link(team)
 end
 
 def moreteam(team)
-  puts "\nWould you like to find out more about the #{team.name}?"
-  puts "Y ".red + "for yes"
-  puts "Exit ".red + "to exit"
-  puts "D ".red + "for a different team"
-  puts "Restart ".red + "to select a new team or player"
+  puts "\nWould you like to find out" + " more ".red + "about the #{team.name}?"
+  puts "Or maybe info about a" + " different ".red + "team?"
+  puts "To select a new team or player, enter" + " restart".red
+  puts "Exit ".red + "to leave the database."
   input = gets.chomp.downcase
-  if input == "y" || input == "yes"
+  if input == "more" || input == "yes"
     system "clear"
     menu_options(team)
   elsif input == "exit"
     exit_program
-  elsif input == "d"
+  elsif input == "different"
     system "clear"
     team_menu
   elsif input == "restart"
     system "clear"
     get_menu
+  else
+    puts "Not a valid input. Try again."
+    sleep(1)
+    system "clear"
+    moreteam(team)
   end
 end

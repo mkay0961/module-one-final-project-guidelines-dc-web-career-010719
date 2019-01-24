@@ -57,7 +57,7 @@ def player_info_menu(player)
 
   input = gets.chomp
   case input.downcase
-  when "1", "1.", "team"
+  when "1", "1.", "team", "teams"
     system "clear"
     get_team(player)
     #moreplayer(player)
@@ -112,7 +112,7 @@ end
 
 
 def get_team(player)
-  puts "#{player.full_name} played for:"
+  puts "In 2018, #{player.full_name} played for:"
   array = []
   player.teams.each_with_index do |team,index|
     puts "#{index+1}. #{team.name}"
