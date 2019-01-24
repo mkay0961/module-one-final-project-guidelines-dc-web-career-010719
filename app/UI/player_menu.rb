@@ -27,13 +27,13 @@ results = Player.all.select{|player| player.full_name.downcase.include?(input)}
    system "clear"
    player_menu
   end
-
+end 
  puts "Select your player by number"
  num = gets.chomp
  selected = x[num.to_i-1]
  puts selected.full_name
  player_info_menu(selected)
-end
+
 end
 
 
@@ -107,6 +107,10 @@ def player_info_menu(player)
     get_menu
   when "11", "11.", "exit"
     exit_program
+  else
+  puts "Not a valid input. Please enter the index or keyword of the info you are searching for."
+  sleep(2)
+  player_info_menu(player)
   end
 end
 
@@ -172,22 +176,28 @@ def get_twitter(player)
 end
 
 def moreplayer(player)
-  puts "\nWould you like to find out more about #{player.full_name}?"
-  puts "Y ".red + "for yes"
-  puts "Exit ".red + "to exit"
-  puts "D ".red + "for a different player"
-  puts "Restart ".red + "to select a new team or player"
+  puts "\nWould you like to find out" + " more ".red + "about #{player.full_name}?"
+  # puts "Y ".red + "for yes"
+
+  puts "Or a" + " different ".red + "player"
+  puts "Restart ".red + "to select a new team or player."
+  puts "Exit ".red + "the database."
   input = gets.chomp.downcase
-  if input == "y" || input == "yes"
+  if input == "y" || input == "yes" || input == "more"
     system "clear"
     player_info_menu(player)
   elsif input == "exit"
     exit_program
-  elsif input == "d"
+  elsif input == "different"
     system "clear"
     player_menu
   elsif input == "restart"
     system "clear"
     get_menu
+  else
+    puts "Not a valid input. Please enter a valid keyword."
+    sleep(2)
+    system "clear"
+    moreplayer(player)
   end
 end
