@@ -192,7 +192,7 @@ end
 
 
 
-
+system "clear"
 puts "Press enter key to begin!"
 gets
 message
