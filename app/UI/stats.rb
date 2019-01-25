@@ -37,11 +37,11 @@ def get_stats(id)
     hingo1 = hinfo["row"]
     puts "The hitting STATS for #{Player.find_by(playerid: id).full_name}"
     rows = []
-    rows << ['AVG', 1]
-    rows << ['HR', 2]
-    rows << ['RBI', 3]
-    rows << ['SB', 4]
-    rows << ['SO', 5]
+    rows << ['AVG', hingo1["avg"]]
+    rows << ['HR', hingo1["hr"]]
+    rows << ['RBI', hingo1["rbi"]]
+    rows << ['SB', hingo1["sb"]]
+    rows << ['SO', hingo1["so"]]
     table = Terminal::Table.new :rows => rows
     puts table
   end
