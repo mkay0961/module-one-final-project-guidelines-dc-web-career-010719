@@ -23,4 +23,27 @@ namespace :db do
   task :console do
     Pry.start
   end
+
+  desc "INFO"
+  task :start do
+    puts "enter 'rake db:seed1'"
+  end
+
+  desc "destroy database"
+  task :destory_database do
+    system "ruby db/destroy.rb"
+  end
+
+  desc "seed1"
+  task :seed1 do
+    system "ruby db/seed1.rb"
+  end
+  desc "seed2"
+  task :seed2 do
+    system "ruby db/seed2.rb"
+  end
+  desc "seed3"
+  task :seed3 do
+    system "ruby db/seed3.rb"
+  end
 end

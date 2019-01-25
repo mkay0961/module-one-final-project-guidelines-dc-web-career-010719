@@ -1,150 +1,186 @@
-Team.destroy_all
-Player.destroy_all
-PlayerTeam.destroy_all
+# Team.destroy_all
+# Player.destroy_all
+# PlayerTeam.destroy_all
 
-class GetTeams
+# class GetTeams
+#
+#   URL = "http://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2018'"
+#   def get_teams
+#     uri = URI.parse(URL)
+#     response = Net::HTTP.get_response(uri)
+#     response.body
+#   end
+#
+#   def parse_JSON
+#     return teams = JSON.parse(self.get_teams)
+#   end
+#
+#
+# end
 
-  URL = "http://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2018'"
-  def get_teams
-    uri = URI.parse(URL)
-    response = Net::HTTP.get_response(uri)
-    response.body
-  end
-
-  def parse_JSON
-    return teams = JSON.parse(self.get_teams)
-  end
-
-
-end
-
-
-class GetPlayers
-
-  URL = "http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='%25'"
-  def get_players
-    uri = URI.parse(URL)
-    response = Net::HTTP.get_response(uri)
-    response.body
-  end
-
-  def parse_JSON
-    return teams = JSON.parse(self.get_players)
-  end
-
-
-end
-
-
-
-
-
-teams = GetTeams.new
-hash = teams.parse_JSON
-hash["team_all_season"]["queryResults"]["row"].each do |team|
-  name = team["name_display_full"]
-  city = team["city"]
-  league = team["league_full"]
-  venue = team["venue_name"]
-  state = team["state"]
-  division = team["division_full"]
-  link = team["store_url"]
-  phonenumber  = team["phone_number"]
-  teamid = team["team_id"]
-  Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber, teamid: teamid)
-end
-
-players = GetPlayers.new
-hash2 = players.parse_JSON
-count = 0
-hash2["search_player_all"]["queryResults"]["row"].each do |player|
-  id = player["player_id"]
-  url = "http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id=" + id
-  uri = URI.parse(url)
-  response = Net::HTTP.get_response(uri)
-  player = JSON.parse(response.body)
-  hash3 = player["player_info"]["queryResults"]["row"]
-
-  full_name = hash3["name_display_first_last"]
-  position = hash3["primary_position_txt"]
-  jersey_number = hash3["jersey_number"].to_i
-  age = hash3["age"].to_i
-  bats = hash3["bats"]
-  twitter = hash3["twitter_id"]
-  throw = hash3["throws"]
-  nickname =hash3["name_nick"]
-  playerid = hash3["player_id"]
-  heightInch = hash3["height_inches"]
-  heightFeet = hash3["height_feet"]
-  height = (heightFeet.to_i*12)+ heightInch.to_i
-  puts count
-  Player.find_or_create_by(full_name: full_name, position: position, jersey_number: jersey_number, height: height, age: age, bats: bats, twitterid: twitter, throws: throw, nickname:nickname, playerid: playerid)
-  count +=1
-end
-
-  count2 =0
-  Player.all.each do |player|
-    #puts player.playerid
-    url = "http://lookup-service-prod.mlb.com/json/named.player_teams.bam?season='2018'&player_id="
-    url +=player.playerid
-    #binding.pry
-    uri = URI.parse(url)
-    response = Net::HTTP.get_response(uri)
-    x = JSON.parse(response.body)
-    #binding.pry
-
-    if x["player_teams"]["queryResults"]["row"].class == Hash
-      if x["player_teams"]["queryResults"]["row"]["sport_code"] == "mlb"
-        #puts"GOT MLB one in array"
-        team = Team.find_by(teamid: x["player_teams"]["queryResults"]["row"]["team_id"])
-        PlayerTeam.find_or_create_by(player: player, team: team)
-      # else
-        #puts"NOT MLB"
-      end
-    elsif x["player_teams"]["queryResults"]["row"].class == Array
-
-      x["player_teams"]["queryResults"]["row"].each do |element|
-        if element["sport_code"] == "mlb"
-          #puts"GOT MLB MULTI array"
-          specteam = Team.find_by(teamid: element["team_id"])
-          PlayerTeam.find_or_create_by(player: player, team: specteam)
-        # else
-          #puts"NOT MLB"
-        end
-      end
-    end
-    puts "second count #{count2}"
-    count2+=1
-end
-
-
-    # x["player_teams"]["queryResults"]["row"].each do |element|
-    #   if element["sport_code"] == "mlb"
-    #     puts"sdf"
-    #   else
-    #     puts"hello"
-    #   end
-    # end
+#
+# class GetPlayers
+#
+#   URL = "http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='%25'"
+#   def get_players
+#     uri = URI.parse(URL)
+#     response = Net::HTTP.get_response(uri)
+#     response.body
+#   end
+#
+#   def parse_JSON
+#     return teams = JSON.parse(self.get_players)
+#   end
+#
+#
+# end
 
 
 
 
 
+# teams = GetTeams.new
+# hash = teams.parse_JSON
+# hash["team_all_season"]["queryResults"]["row"].each do |team|
+#   name = team["name_display_full"]
+#   city = team["city"]
+#   league = team["league_full"]
+#   venue = team["venue_name"]
+#   state = team["state"]
+#   division = team["division_full"]
+#   link = team["store_url"]
+#   phonenumber  = team["phone_number"]
+#   teamid = team["team_id"]
+#   Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber, teamid: teamid)
+# end
+# puts "All the teams were created!!!!"
+# sleep(2)
+# system "clear"
+# puts "Time to create the players"
+# puts "This is going to take a min"
+#
+# players = GetPlayers.new
+# hash2 = players.parse_JSON
+# count = 0
+# hash2["search_player_all"]["queryResults"]["row"].each do |player|
+#   id = player["player_id"]
+#   url = "http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id=" + id
+#   uri = URI.parse(url)
+#   response = Net::HTTP.get_response(uri)
+#   player = JSON.parse(response.body)
+#   hash3 = player["player_info"]["queryResults"]["row"]
+#
+#   full_name = hash3["name_display_first_last"]
+#   position = hash3["primary_position_txt"]
+#   jersey_number = hash3["jersey_number"].to_i
+#   age = hash3["age"].to_i
+#   bats = hash3["bats"]
+#   twitter = hash3["twitter_id"]
+#   throw = hash3["throws"]
+#   nickname =hash3["name_nick"]
+#   playerid = hash3["player_id"]
+#   heightInch = hash3["height_inches"]
+#   heightFeet = hash3["height_feet"]
+#   height = (heightFeet.to_i*12)+ heightInch.to_i
+#   print "."
+#   case count
+#   when 100
+#     system "clear"
+#     puts "We are on the way to a full database!"
+#   when 500
+#     system "clear"
+#     puts "Making progress"
+#   when 1000
+#     system "clear"
+#     puts "Wow Making some amaizing progress "
+#   when 1500
+#     system "clear"
+#     puts "HALF WAY"
+#   when 1700
+#     system "clear"
+#     puts "Almost there"
+#   when 2000
+#     system "clear"
+#     puts "So close to being done with players"
+#   when 2500
+#     system "clear"
+#     puts "SOOOOOOOO close"
+#   end
+#   Player.find_or_create_by(full_name: full_name, position: position, jersey_number: jersey_number, height: height, age: age, bats: bats, twitterid: twitter, throws: throw, nickname:nickname, playerid: playerid)
+#   sleep(0.1)
+#   count +=1
+# end
+#
+# system "clear"
+# puts "All the PLAYER were created!!!!"
+# sleep(3)
+# system "clear"
+# puts "Time to create the Join Table"
+# puts "This is going to take another min"
+#
+#
+# count2 =0
+# Player.all.each do |player|
+#   url = "http://lookup-service-prod.mlb.com/json/named.player_teams.bam?season='2018'&player_id="
+#   url +=player.playerid
+#   uri = URI.parse(url)
+#   response = Net::HTTP.get_response(uri)
+#   x = JSON.parse(response.body)
+#   if x["player_teams"]["queryResults"]["row"].class == Hash
+#     if x["player_teams"]["queryResults"]["row"]["sport_code"] == "mlb"
+#       team = Team.find_by(teamid: x["player_teams"]["queryResults"]["row"]["team_id"])
+#       PlayerTeam.find_or_create_by(player: player, team: team)
+#     end
+#   elsif x["player_teams"]["queryResults"]["row"].class == Array
+#
+#     x["player_teams"]["queryResults"]["row"].each do |element|
+#       if element["sport_code"] == "mlb"
+#         specteam = Team.find_by(teamid: element["team_id"])
+#         PlayerTeam.find_or_create_by(player: player, team: specteam)
+#       end
+#     end
+#   end
+#   print "."
+#   case count2
+#   when 100
+#     system "clear"
+#     puts "We are on the way to a full database!"
+#   when 500
+#     system "clear"
+#     puts "Making progress"
+#   when 1000
+#     system "clear"
+#     puts "Wow Making some amaizing progress "
+#   when 1500
+#     system "clear"
+#     puts "HALF WAY"
+#   when 1700
+#     system "clear"
+#     puts "Almost there"
+#   when 2000
+#     system "clear"
+#     puts "So close to being done with join table"
+#   when 2500
+#     system "clear"
+#     puts "SOOOOOOOO close"
+#   end
+#   #sleep(0.1)
+#   count2+=1
+# end
+#
+# system "clear"
+# puts "The join table was CREATED!!!!!!"
+# sleep(3)
+# system "clear"
+# puts "TIME to run the program"
+# puts "enter 'ruby bin/run.rb "
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-#binding.pry
+#dummy data
 
 
 
