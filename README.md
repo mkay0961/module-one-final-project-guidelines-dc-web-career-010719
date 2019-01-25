@@ -12,6 +12,21 @@ In your terminal, run 'rake db:seed' to seed your local database from the API.
 
 To run rspec tests, enter rspec in terminal.
 
+
+To set up the project first run 'rake db:migrate'
+
+Next 'rake db:start'
+
+Next 'rake db:start'
+
+Next 'rake db:seed1'
+
+Next 'rake db:seed2'
+
+Next 'rake db:seed3'
+
+Then:
+
 To start the program, run in terminal: 'ruby bin/run.rb'
 
 Users are first prompted to choose between searching for a player or team.
