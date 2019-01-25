@@ -59,11 +59,7 @@ def menu_options(team)
     system "clear"
     get_division(team)
     moreteam(team)
-<<<<<<< HEAD
-  when "5", "5.", "phone"
-=======
   when 5
->>>>>>> COLOR
     system "clear"
     get_phonenumber(team)
     moreteam(team)
