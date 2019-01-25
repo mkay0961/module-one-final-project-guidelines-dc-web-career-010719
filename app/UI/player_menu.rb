@@ -1,4 +1,5 @@
 def player_menu
+  system "clear"
   puts "Which player would you like to know about?"
   puts "Type a portion of their full name, or exit/restart:"
   input = gets.chomp.downcase
@@ -25,6 +26,7 @@ def player_menu
   choices << hash
   end
   # binding.pry
+  choices << {name: "Find a new "+"player".red, value: 7777}
   choices << {name: "Restart ".red + "program", value: 999}
   choices << {name: "Exit ".red + "the program", value: 888}
   prompt = TTY::Prompt.new
@@ -34,6 +36,9 @@ def player_menu
   elsif input == 999
     system "clear"
     get_menu
+  elsif input == 7777
+    system "clear"
+    player_menu
   else
     puts results[input]
     player_info_menu(results[input])
@@ -55,8 +60,9 @@ def player_info_menu(player)
     menu.choice "8. What is their" + " nickname".red + "?", 8
     menu.choice "9. What is their" + " twitter ".red + "handle?", 9
     menu.choice "10. Would you like to see some"+" STATS".red + "?", 10
-    menu.choice "11." + " Restart ".red + "program", 11
-    menu.choice "12." + " Exit ".red + "the program", 12
+    menu.choice "11. Search for a new"+" player".red + "?", 11
+    menu.choice "12." + " Restart ".red + "program", 12
+    menu.choice "13." + " Exit ".red + "the program", 13
   end
 
 
@@ -99,8 +105,10 @@ def player_info_menu(player)
   when 10
     get_stats(player.playerid)
   when 11
-    get_menu
+    player_menu
   when 12
+    get_menu
+  when 13
     exit_program
   end
 end

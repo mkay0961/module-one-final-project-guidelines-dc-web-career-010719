@@ -71,8 +71,9 @@ def get_stats(id)
   prompt = TTY::Prompt.new
   input = prompt.select("\nWhat do you want to do?", per_page: 3) do |menu|
     menu.choice "1." + " GO BACK".red , 1
-    menu.choice "2." + " Restart ".red + "program", 2
-    menu.choice "3." + " Exit ".red + "the program", 3
+    menu.choice "2. Find a new" + " player".red , 2
+    menu.choice "3." + " Restart ".red + "program", 3
+    menu.choice "4." + " Exit ".red + "the program", 4
   end
 
   case input
@@ -81,8 +82,11 @@ def get_stats(id)
     player_info_menu(Player.find_by(playerid: id))
   when 2
     system "clear"
-    get_menu
+    player_menu
   when 3
+    system "clear"
+    get_menu
+  when 4
     system "clear"
     exit_program
   end
