@@ -23,6 +23,7 @@ end
 
 puts "Time to create the players"
 puts "This is going to take a min"
+bar = TTY::ProgressBar.new("Seeding Player Database [:bar]", total: 2997,  head: '>')
 
 players = GetPlayers.new
 hash2 = players.parse_JSON
@@ -47,37 +48,39 @@ hash2["search_player_all"]["queryResults"]["row"].each do |player|
   heightInch = hash3["height_inches"]
   heightFeet = hash3["height_feet"]
   height = (heightFeet.to_i*12)+ heightInch.to_i
-  print "."
-  case count
-  when 100
-    system "clear"
-    puts "We are on the way to a full database!"
-  when 500
-    system "clear"
-    puts "Making progress"
-  when 1000
-    system "clear"
-    puts "Wow Making some amaizing progress "
-  when 1500
-    system "clear"
-    puts "HALF WAY"
-  when 1700
-    system "clear"
-    puts "Almost there"
-  when 2000
-    system "clear"
-    puts "So close to being done with players"
-  when 2500
-    system "clear"
-    puts "SOOOOOOOO close"
-  end
+  #sleep(0.1)
+
+  # case count
+  # when 100
+  #   system "clear"
+  #   puts "We are on the way to a full database!"
+  # when 500
+  #   system "clear"
+  #   puts "Making progress"
+  # when 1000
+  #   system "clear"
+  #   puts "Wow Making some amaizing progress "
+  # when 1500
+  #   system "clear"
+  #   puts "HALF WAY"
+  # when 1700
+  #   system "clear"
+  #   puts "Almost there"
+  # when 2000
+  #   system "clear"
+  #   puts "So close to being done with players"
+  # when 2500
+  #   system "clear"
+  #   puts "SOOOOOOOO close"
+  # end
   Player.find_or_create_by(full_name: full_name, position: position, jersey_number: jersey_number, height: height, age: age, bats: bats, twitterid: twitter, throws: throw, nickname:nickname, playerid: playerid)
   sleep(0.1)
+  bar.advance(1)
   count +=1
 end
 
-system "clear"
+# system "clear"
 puts "All the PLAYER were created!!!!"
-sleep(3)
-system "clear"
-puts "ENTER 'rake db:seed3'"
+# sleep(3)
+# system "clear"
+puts "\n\nENTER 'rake db:seed3'"

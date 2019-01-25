@@ -2,6 +2,15 @@ def team_menu
   array = []
   choices = []
   count =0
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "*|  TEAMS  |*"
+  end
+  puts box
    Team.all.each_with_index do|team, index|
      hash = {name: "#{index+1}. #{team.name}"}
      hash.merge!(value: count)
@@ -12,7 +21,7 @@ def team_menu
    choices << {name: "Restart ".red + "program", value: 999}
    choices << {name: "Exit ".red + "the program", value: 888}
    prompt = TTY::Prompt.new
-   input = prompt.select("Which team would you like to know about", choices, per_page: choices.size )
+   input = prompt.select("Which team would you like to know about", choices, per_page: (TTY::Screen.lines - 5))
    puts input
    if input == 888
      exit_program
@@ -26,9 +35,17 @@ end
 
 def menu_options(team)
   system "clear"
-
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "*|  #{team.name}  |*"
+  end
+  puts box
   prompt = TTY::Prompt.new
-  input = prompt.select("What do you want to know about The #{team.name}?", per_page: 8) do |menu|
+  input = prompt.select("What do you want to know about The #{team.name}?", per_page: (TTY::Screen.lines - 5)) do |menu|
     menu.choice "1. Which players appeared on the" + " roster".red + " in 2018?", 1
     menu.choice "2." + " Where ".red + "do they play?", 2
     menu.choice "3. What" + " league ".red + "are they in?", 3
@@ -43,7 +60,7 @@ def menu_options(team)
   when 1
     system "clear"
     getplayers(team)
-    #moreteam(team)
+    moreteam(team)
   when 2
     system "clear"
     get_city_venue_state(team)
@@ -78,9 +95,19 @@ def getplayers(team)
   prompt = TTY::Prompt.new
   choices =[]
   count = 0
-  choices << {name: "Find" +" more ".red + "about #{team.name}\n", value: 777}
+  choices << {name: "Find" +" more ".red + "about #{team.name}\n", value: 7777}
 
-  puts "The players on the #{team.name} are: "
+  # puts "The players on the #{team.name} are: "
+
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "The players on the #{team.name} are"
+  end
+  puts box
   array = []
   team.players.each_with_index do |player,index|
     hash = {name: "More info on "+"#{player.full_name}".red}
@@ -89,15 +116,15 @@ def getplayers(team)
     choices << hash
     array << player
   end
-  choices << {name: "Restart ".red + "program", value: 999}
-  choices << {name: "Exit ".red + "the program", value: 888}
-  input = prompt.select("\nWhat would you like to do?", choices, per_page:40 )
-  if input == 888
+  choices << {name: "Restart ".red + "program", value: 9999}
+  choices << {name: "Exit ".red + "the program", value: 8888}
+  input = prompt.select("\nWhat would you like to do?", choices, per_page:(TTY::Screen.lines - (TTY::Screen.lines/2)))
+  if input == 8888
     exit_program
-  elsif input == 777
+  elsif input == 7777
     system "clear"
     menu_options(team)
-  elsif input == 999
+  elsif input == 9999
     system "clear"
     get_menu
   else
@@ -107,24 +134,63 @@ end
 
 
 def get_city_venue_state(team)
-    puts "The #{team.name} are from #{team.city}, #{team.state}."
-    puts "They play in #{team.venue}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "The #{team.name} are from #{team.city}, #{team.state}.\n They play in #{team.venue}."
+  end
+    puts box
 end
 
 def get_league(team)
-    puts "The #{team.name} are in the #{team.league}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "The #{team.name} are in the #{team.league}."
+  end
+    puts box
 end
 
 def get_division(team)
-  puts "The #{team.name} are in the #{team.division} division."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "The #{team.name} are in the #{team.division} division."
+  end
+    puts box
 end
 
 def get_phonenumber(team)
-    puts "The phone number for the #{team.name} is #{team.phonenumber}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "The phone number for the #{team.name} is #{team.phonenumber}."
+  end
+    puts box
 end
 
 def get_link(team)
-  puts "The Website for the #{team.name} is #{team.link}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "The Website for the #{team.name} is #{team.link}."
+  end
+  puts box
   puts "Would you like to open their store website (Y/N)"
   input = gets.chomp.downcase
   if input == "y" || input == "yes"
@@ -139,7 +205,18 @@ end
 
 def moreteam(team)
   prompt = TTY::Prompt.new
-  input = prompt.select("\nWhat would you like to do?", per_page: 10) do |menu|
+
+
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "Players on the #{team.name}"
+  end
+  # puts box
+  input = prompt.select("What would you like to do?", per_page: (TTY::Screen.lines - 5)) do |menu|
     menu.choice "1. Find more about the "+ "#{team.name}".red+"?", 1
     menu.choice "2. Select a" + " different team".red+"?", 2
     menu.choice "3." + " Restart ".red + "program", 3

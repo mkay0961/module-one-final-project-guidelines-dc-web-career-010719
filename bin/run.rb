@@ -176,6 +176,7 @@ def message
 
   EOF
   puts "\n\n"
+  sleep(1)
 
 end
 
@@ -189,7 +190,6 @@ end
 # pastel = Pastel.new
 # font = TTY::Font.new(:doom)
 # puts pastel.bright_red(font.write("Press enter key to begin!"))
-
 
 
 system "clear"

@@ -11,6 +11,9 @@ require 'tty-font'
 require 'tty-prompt'
 require "table_print"
 require 'terminal-table'
+require 'tty-screen'
+require 'tty-progressbar'
+require 'tty-box'
 
 require_rel "../app/UI"
 

@@ -16,3 +16,6 @@ gem 'pastel'
 gem 'pry-rescue'
 gem "table_print"
 gem 'terminal-table'
+gem 'tty-screen'
+gem 'tty-progressbar'
+gem 'tty-box'

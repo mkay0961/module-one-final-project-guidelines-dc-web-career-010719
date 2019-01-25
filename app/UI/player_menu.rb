@@ -1,6 +1,16 @@
 def player_menu
   system "clear"
-  puts "Which player would you like to know about?"
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+
+    "*|   PLAYERS   |*\nWhich player would you like to know about?"
+  end
+  puts box
+  # puts "Which player would you like to know about?"
   puts "Type a portion of their full name, or exit/restart:"
   input = gets.chomp.downcase
     if input.downcase == "exit"
@@ -26,7 +36,15 @@ def player_menu
       system "clear"
       player_menu
     end
-
+    box = TTY::Box.frame(
+      width: TTY::Screen.cols - (TTY::Screen.cols/2),
+      height: 10,
+      align: :center,
+      padding: 3
+    ) do
+      "Player Results"
+    end
+    puts box
     results.each do |player|
       hash = {name: "#{count+1}. #{player.full_name}"}
       hash.merge!(value: count)
@@ -37,7 +55,7 @@ def player_menu
     choices << {name: "Restart ".red + "program", value: 999}
     choices << {name: "Exit ".red + "the program", value: 888}
     prompt = TTY::Prompt.new
-    input = prompt.select("Which team would you like to know about", choices, per_page:30 )
+    input = prompt.select("Which player would you like to know about", choices, per_page: (TTY::Screen.lines - (TTY::Screen.lines/2)) )
     if input == 888
       exit_program
     elsif input == 999
@@ -54,9 +72,17 @@ end
 
 def player_info_menu(player)
   system "clear"
-
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "*|  #{player.full_name}  |*"
+  end
+  puts box
   prompt = TTY::Prompt.new
-  input = prompt.select("What would you like to know about #{player.full_name}?", per_page: 13) do |menu|
+  input = prompt.select("What would you like to know about #{player.full_name}?", per_page: (TTY::Screen.lines - 5)) do |menu|
     menu.choice "1. What" + " teams ".red + "have they played for?", 1
     menu.choice "2. What" + " position ".red + "do they play?", 2
     menu.choice "3. What is their" +" jersey number".red + "?", 3
@@ -125,30 +151,43 @@ def get_team(player)
   prompt = TTY::Prompt.new
   choices =[]
   count = 0
-  choices << {name: "Find" +" more ".red + "about #{player.full_name}", value: 777}
+  choices << {name: "Find" +" more ".red + "about #{player.full_name}", value: 7777}
   if player.teams.length == 0
     puts "#{player.full_name} was not on an MLB team this season."
   else
-  puts "In 2018, #{player.full_name} played for:"
-  array = []
-  player.teams.each_with_index do |team,index|
-    puts "#{index+1}. #{team.name}"
-    hash = {name: "Find more about the"+" #{team.name}".red}
-    hash.merge!(value: count)
-    count+=1
-    choices << hash
-    array << team
+
+
+
+    str = "In 2018, #{player.full_name} played for: "
+    array = []
+    player.teams.each_with_index do |team,index|
+      str += "\n#{index+1}. #{team.name}"
+      hash = {name: "Find more about the"+" #{team.name}".red}
+      hash.merge!(value: count)
+      count+=1
+      choices << hash
+      array << team
     end
   end
-  choices << {name: "Restart ".red + "program", value: 999}
-  choices << {name: "Exit ".red + "the program", value: 888}
-  input = prompt.select("\nWhat would you like to do?", choices, per_page:30 )
-  if input == 888
+
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    str
+  end
+  puts box
+  choices << {name: "Restart ".red + "program", value: 9999}
+  choices << {name: "Exit ".red + "the program", value: 8888}
+  input = prompt.select("\nWhat would you like to do?", choices, per_page: (TTY::Screen.lines - 5) )
+  if input == 8888
     exit_program
-  elsif input == 777
+  elsif input == 7777
     system "clear"
     player_info_menu(player)
-  elsif input == 999
+  elsif input == 9999
     system "clear"
     get_menu
   else
@@ -157,27 +196,89 @@ def get_team(player)
 end
 
 def get_position(player)
-  puts "#{player.full_name} primarily played #{player.position}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "#{player.full_name} primarily played #{player.position}."
+  end
+  puts box
+
+  # puts "#{player.full_name} primarily played #{player.position}."
 end
 
 def get_jersey_num(player)
-  puts "#{player.full_name} wore the number #{player.jersey_number}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "#{player.full_name} wore the number #{player.jersey_number}."
+  end
+  puts box
+
+  # puts "#{player.full_name} wore the number #{player.jersey_number}."
 end
 
 def get_height(player)
-  puts "#{player.full_name} is #{player.height} inches tall."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "#{player.full_name} is #{player.height} inches tall."
+  end
+  puts box
+
+  # puts "#{player.full_name} is #{player.height} inches tall."
 end
 
 def get_bats(player)
-  puts "#{player.full_name} bats #{player.bats}."
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "#{player.full_name} bats #{player.bats}."
+  end
+  puts box
+
+  # puts "#{player.full_name} bats #{player.bats}."
 end
 
 def get_age(player)
-  puts "#{player.full_name} was #{player.age}."
+
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "#{player.full_name} was #{player.age}."
+  end
+  puts box
+
+  # puts "#{player.full_name} was #{player.age}."
 end
 
 def get_throws(player)
-  puts "#{player.full_name} throws #{player.throws}."
+
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+    "#{player.full_name} throws #{player.throws}."
+  end
+  puts box
+
+  # puts "#{player.full_name} throws #{player.throws}."
 end
 
 def get_nickname(player)
@@ -199,7 +300,7 @@ end
 def moreplayer(player)
 
   prompt = TTY::Prompt.new
-  input = prompt.select("\nWhat would you like to do?", per_page: 10) do |menu|
+  input = prompt.select("\nWhat would you like to do?", per_page: (TTY::Screen.lines - 5)) do |menu|
     menu.choice "1. Find more about "+ "#{player.full_name}".red+"?", 1
     menu.choice "2. Select a" + " different player".red+"?", 2
     menu.choice "3." + " Restart ".red + "program", 3

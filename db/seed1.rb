@@ -19,6 +19,7 @@ class GetTeams
 end
 
 puts "Lets create the TEAM database"
+bar = TTY::ProgressBar.new("Seeding Team Database [:bar]", total: 30,  head: '>')
 teams = GetTeams.new
 hash = teams.parse_JSON
 hash["team_all_season"]["queryResults"]["row"].each do |team|
@@ -31,11 +32,12 @@ hash["team_all_season"]["queryResults"]["row"].each do |team|
   link = team["store_url"]
   phonenumber  = team["phone_number"]
   teamid = team["team_id"]
-  print "."
+  sleep(0.1)
+  bar.advance(1)
   Team.find_or_create_by(name: name ,city: city, league: league, venue: venue, state: state, division: division, link: link, phonenumber: phonenumber, teamid: teamid)
 end
 puts "\nAll the teams were created!!!!"
-sleep(2)
-system "clear"
+# sleep(2)
+# system "clear"
 
-puts "ENTER 'rake db:seed2'"
+puts "\n\nENTER 'rake db:seed2'"

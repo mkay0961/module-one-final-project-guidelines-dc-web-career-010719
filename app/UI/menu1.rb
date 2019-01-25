@@ -1,7 +1,14 @@
 def get_menu
   system "clear"
-  puts "This app allows you to search for information about players and their \nteams during the 2018 Season of Major League Baseball!"
-  puts "\n\n"
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: 10,
+    align: :center,
+    padding: 3
+  ) do
+     "This app allows you to search for information about players and their \nteams during the 2018 Season of Major League Baseball!"
+  end
+  puts box
 
   prompt = TTY::Prompt.new
   input = prompt.select("What would you like to know more about?") do |menu|
