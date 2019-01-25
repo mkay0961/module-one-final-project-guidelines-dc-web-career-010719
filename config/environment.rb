@@ -15,6 +15,8 @@ require 'json'
 require 'pry'
 require 'tty-font'
 require 'tty-prompt'
+require "table_print"
+require 'terminal-table'
 
 require_rel "../app/UI"
 

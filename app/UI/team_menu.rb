@@ -4,7 +4,6 @@ array = []
 choices = []
 count =0
  Team.all.each_with_index do|team, index|
-   # puts "#{index+1}. #{team.name}"
    hash = {name: "#{index+1}. #{team.name}"}
    hash.merge!(value: count)
    count+=1
@@ -13,13 +12,19 @@ count =0
 
 
  end
-
+ choices << {name: "Restart ".red + "program", value: 999}
+ choices << {name: "Exit ".red + "the program", value: 888}
  prompt = TTY::Prompt.new
  input = prompt.select("Which team would you like to know about", choices, per_page: choices.size )
  puts input
-
- menu_options(array[input])
-
+ if input == 888
+   exit_program
+ elsif input == 999
+   system "clear"
+   get_menu
+ else
+    menu_options(array[input])
+ end
 end
 
 def menu_options(team)
@@ -37,9 +42,6 @@ def menu_options(team)
     menu.choice "8." + " Exit ".red + "the program", 8
   end
 
-
-
-  # input = gets.chomp
   case input
   when 1
     system "clear"
@@ -57,7 +59,7 @@ def menu_options(team)
     system "clear"
     get_division(team)
     moreteam(team)
-  when 5 
+  when 5
     system "clear"
     get_phonenumber(team)
     moreteam(team)
@@ -85,7 +87,6 @@ def getplayers(team)
   puts "The players on the #{team.name} are: "
   array = []
   team.players.each_with_index do |player,index|
-    # puts "#{index+1}. #{player.full_name}"
     hash = {name: "Info about: "+"#{player.full_name}".red}
     hash.merge!(value: count)
     count+=1
@@ -94,7 +95,7 @@ def getplayers(team)
   end
   choices << {name: "Restart ".red + "program", value: 999}
   choices << {name: "Exit ".red + "the program", value: 888}
-  input = prompt.select("\nWhat would you like to do?", choices, per_page:40 )
+  input = prompt.select("\nWhat would you like to do?", choices, per_page:20 )
 
 
 
@@ -120,7 +121,6 @@ end
 
 def get_league(team)
     puts "The #{team.name} are in the #{team.league}."
-    #refactor to expand on NL to national league
 end
 
 def get_division(team)

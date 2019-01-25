@@ -1,160 +1,107 @@
 def player_menu
-puts "Which player would you like to know about?"
-puts "Type a portion of their full name, or exit/restart:"
-input = gets.chomp.downcase
-if input.downcase == "exit"
-  exit_program
+  puts "Which player would you like to know about?"
+  puts "Type a portion of their full name, or exit/restart:"
+  input = gets.chomp.downcase
+    if input.downcase == "exit"
+      exit_program
 
-elsif
-  input.downcase == "restart"
-  get_menu
-else
-  results(input)
+    elsif
+      input.downcase == "restart"
+      get_menu
+    else
+      results(input)
+    end
+  end
+
+  def results(input)
+  choices =[]
+  count = 0
+  results = Player.all.select{|player| player.full_name.downcase.include?(input)}
+
+  results.each do |player|
+  hash = {name: "#{count+1}. #{player.full_name}"}
+  hash.merge!(value: count)
+  count+=1
+  choices << hash
+  end
+  # binding.pry
+  choices << {name: "Restart ".red + "program", value: 999}
+  choices << {name: "Exit ".red + "the program", value: 888}
+  prompt = TTY::Prompt.new
+  input = prompt.select("Which team would you like to know about", choices, per_page:30 )
+  if input == 888
+    exit_program
+  elsif input == 999
+    system "clear"
+    get_menu
+  else
+    puts results[input]
+    player_info_menu(results[input])
+  end
 end
-end
-
-def results(input)
-choices =[]
-count = 0
-results = Player.all.select{|player| player.full_name.downcase.include?(input)}
-
-results.each do |player|
-hash = {name: "#{count+1}. #{player.full_name}"}
-hash.merge!(value: count)
-count+=1
-choices << hash
-end
-# binding.pry
-prompt = TTY::Prompt.new
-input = prompt.select("Which team would you like to know about", choices, per_page:30 )
-puts results[input]
-player_info_menu(results[input])
-end
-  # if results.length > 0
-  #  x = results.map{|player| player}
-  #  system "clear"
-  #  puts "searching..."
-  #  sleep(0.5)
-  # system "clear"
-  #  puts "Select player:"
-  #  x.each_with_index{|player, index| puts  "#{index+1}. #{player.full_name}"}
-  # else
-  #   puts "searching..."
-  #  puts "no players found"
-  #  sleep(2)
-  #  system "clear"
-  #  player_menu
-  # end
-  # puts "Select your player by number"
-  # num = gets.chomp
-  # if num.to_i == 0 || num.to_i > results.length
-  #   puts "Invalid input"
-  #   sleep(0.75)
-  #   system "clear"
-  # results(input)
-  # else
-  # selected = x[num.to_i-1]
-  # puts selected.full_name
-  # player_info_menu(selected)
-  # end
-# end
-
-
-
-
-
 
 def player_info_menu(player)
   system "clear"
-  # puts "What would you like to know about #{player.full_name}?"
-  # puts "\n"
-  # puts "Select by index, or enter the" + " keyword".red
-  # puts "\n"
-  # puts "1. What" + " teams ".red + "have they played for?"
-  # puts "2. What" + " position ".red + "do they play?"
-  # puts "3. What is their jersey" + " number?".red
-  # puts "4. How" + " tall ".red + "are they?"
-  # puts "5. How" + " old ".red + "are they?"
-  # puts "6. Which side do they" + " bat ".red + "from?"
-  # puts "7. Which hand do they" + " throw ".red + "from?"
-  # puts "8. What is their" + " nickname ".red + "?"
-  # puts "9. What is their" + " twitter ".red + "handle?"
-  # puts "10." + " Restart ".red + "program"
-  # puts "11." + " Exit ".red + "the program"
 
   prompt = TTY::Prompt.new
   input = prompt.select("What would you like to know about #{player.full_name}?", per_page: 11) do |menu|
     menu.choice "1. What" + " teams ".red + "have they played for?", 1
     menu.choice "2. What" + " position ".red + "do they play?", 2
-    menu.choice "3. What is their jersey" + " number?", 3
+    menu.choice "3. What is their" +" jersey number".red + "?", 3
     menu.choice "4. How" + " tall ".red + "are they?", 4
     menu.choice "5. How" + " old ".red + "are they?", 5
     menu.choice "6. Which side do they" + " bat ".red + "from?", 6
     menu.choice "7. Which hand do they" + " throw ".red + "from?", 7
     menu.choice "8. What is their" + " nickname".red + "?", 8
     menu.choice "9. What is their" + " twitter ".red + "handle?", 9
-    menu.choice "10." + " Restart ".red + "program", 10
-    menu.choice "11." + " Exit ".red + "the program", 11
+    menu.choice "10. Would you like to see some"+" STATS".red + "?", 10
+    menu.choice "11." + " Restart ".red + "program", 11
+    menu.choice "12." + " Exit ".red + "the program", 12
   end
 
 
-  # input = gets.chomp
-  # case input.downcase
   case input
   when 1
     system "clear"
     get_team(player)
-    #moreplayer(player)
-    # puts "#{player.full_name} played for:"
-    # player.teams.each {|team| puts"#{team.name}"}
   when 2
     system "clear"
     get_position(player)
     moreplayer(player)
-    # puts "#{player.full_name} primarily played #{player.position}"
   when 3
     system "clear"
     get_jersey_num(player)
     moreplayer(player)
-    # puts "#{player.full_name} wore the number #{player.jersey_number}"
   when 4
     system "clear"
     get_height(player)
     moreplayer(player)
-    # puts "#{player.full_name} is #{player.height} inches tall."
   when 5
     system "clear"
     get_age(player)
     moreplayer(player)
-    # puts "#{player.full_name} was #{player.age}."
   when 6
     system "clear"
     get_bats(player)
     moreplayer(player)
-    # puts "#{player.full_name} bats #{player.bats}."
   when 7
     system "clear"
     get_throws(player)
     moreplayer(player)
-    # puts "#{player.full_name} throws #{player.throws}."
   when 8
     system "clear"
     get_nickname(player)
     moreplayer(player)
-    # puts "#{player.full_name} also goes by #{player.nickname}."
   when 9
     system "clear"
     get_twitter(player)
     moreplayer(player)
-    # puts "#{player.full_name} is on twitter at  #{player.twitterid}."
   when 10
-    get_menu
+    get_stats(player.playerid)
   when 11
+    get_menu
+  when 12
     exit_program
-  # else
-  # puts "Not a valid input. Please enter the index or keyword of the info you are searching for."
-  # sleep(2)
-  # player_info_menu(player)
   end
 end
 
@@ -178,7 +125,6 @@ def get_team(player)
     array << team
     end
   end
-
   choices << {name: "Restart ".red + "program", value: 999}
   choices << {name: "Exit ".red + "the program", value: 888}
   input = prompt.select("\nWhat would you like to do?", choices, per_page:30 )
@@ -245,15 +191,7 @@ def moreplayer(player)
     menu.choice "3." + " Restart ".red + "program", 3
     menu.choice "4." + " Exit ".red + "the program", 4
   end
-
-
   puts "\nWould you like to find out" + " more ".red + "about #{player.full_name}?"
-  # puts "Y ".red + "for yes"
-
-  # puts "Or a" + " different ".red + "player"
-  # puts "Restart ".red + "to select a new team or player."
-  # puts "Exit ".red + "the database."
-  # input = gets.chomp.downcase
   if input == 1
     system "clear"
     player_info_menu(player)
@@ -265,10 +203,5 @@ def moreplayer(player)
   elsif input == 3
     system "clear"
     get_menu
-  # else
-  #   puts "Not a valid input. Please enter a valid keyword."
-  #   sleep(2)
-  #   system "clear"
-  #   moreplayer(player)
   end
 end
