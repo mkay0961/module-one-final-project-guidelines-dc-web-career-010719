@@ -16,3 +16,5 @@ gem 'tty-prompt'
 gem 'tty-font'
 gem 'pastel'
 gem 'pry-rescue'
+gem "table_print"
+gem 'terminal-table'
