@@ -9,6 +9,9 @@ def player_menu
       input.downcase == "restart"
       get_menu
     else
+      puts "searching..."
+      sleep(2)
+      system "clear"
       results(input)
     end
   end
@@ -17,6 +20,12 @@ def player_menu
     choices =[]
     count = 0
     results = Player.all.select{|player| player.full_name.downcase.include?(input)}
+    if results.length == 0
+      puts "No players found"
+      sleep(1)
+      system "clear"
+      player_menu
+    end
 
     results.each do |player|
       hash = {name: "#{count+1}. #{player.full_name}"}
