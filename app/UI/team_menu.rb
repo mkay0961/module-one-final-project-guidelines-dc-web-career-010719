@@ -96,9 +96,7 @@ def getplayers(team)
   choices =[]
   count = 0
   choices << {name: "Find" +" more ".red + "about #{team.name}\n", value: 7777}
-
-  # puts "The players on the #{team.name} are: "
-
+  
   box = TTY::Box.frame(
     width: TTY::Screen.cols - (TTY::Screen.cols/2),
     height: 10,
@@ -206,16 +204,6 @@ end
 def moreteam(team)
   prompt = TTY::Prompt.new
 
-
-  box = TTY::Box.frame(
-    width: TTY::Screen.cols - (TTY::Screen.cols/2),
-    height: 10,
-    align: :center,
-    padding: 3
-  ) do
-     "Players on the #{team.name}"
-  end
-  # puts box
   input = prompt.select("What would you like to do?", per_page: (TTY::Screen.lines - 5)) do |menu|
     menu.choice "1. Find more about the "+ "#{team.name}".red+"?", 1
     menu.choice "2. Select a" + " different team".red+"?", 2

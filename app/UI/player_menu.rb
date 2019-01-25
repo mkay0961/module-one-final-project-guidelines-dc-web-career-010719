@@ -10,7 +10,6 @@ def player_menu
     "*|   PLAYERS   |*\nWhich player would you like to know about?"
   end
   puts box
-  # puts "Which player would you like to know about?"
   puts "Type a portion of their full name, or exit/restart:"
   input = gets.chomp.downcase
     if input.downcase == "exit"
@@ -206,7 +205,6 @@ def get_position(player)
   end
   puts box
 
-  # puts "#{player.full_name} primarily played #{player.position}."
 end
 
 def get_jersey_num(player)
@@ -220,7 +218,6 @@ def get_jersey_num(player)
   end
   puts box
 
-  # puts "#{player.full_name} wore the number #{player.jersey_number}."
 end
 
 def get_height(player)
@@ -234,7 +231,6 @@ def get_height(player)
   end
   puts box
 
-  # puts "#{player.full_name} is #{player.height} inches tall."
 end
 
 def get_bats(player)
@@ -248,7 +244,6 @@ def get_bats(player)
   end
   puts box
 
-  # puts "#{player.full_name} bats #{player.bats}."
 end
 
 def get_age(player)
@@ -263,7 +258,6 @@ def get_age(player)
   end
   puts box
 
-  # puts "#{player.full_name} was #{player.age}."
 end
 
 def get_throws(player)
@@ -278,7 +272,6 @@ def get_throws(player)
   end
   puts box
 
-  # puts "#{player.full_name} throws #{player.throws}."
 end
 
 def get_nickname(player)
