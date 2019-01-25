@@ -49,7 +49,7 @@ def player_info_menu(player)
   system "clear"
 
   prompt = TTY::Prompt.new
-  input = prompt.select("What would you like to know about #{player.full_name}?", per_page: 11) do |menu|
+  input = prompt.select("What would you like to know about #{player.full_name}?", per_page: 13) do |menu|
     menu.choice "1. What" + " teams ".red + "have they played for?", 1
     menu.choice "2. What" + " position ".red + "do they play?", 2
     menu.choice "3. What is their" +" jersey number".red + "?", 3

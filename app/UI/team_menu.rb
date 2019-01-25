@@ -96,9 +96,6 @@ def getplayers(team)
   choices << {name: "Restart ".red + "program", value: 999}
   choices << {name: "Exit ".red + "the program", value: 888}
   input = prompt.select("\nWhat would you like to do?", choices, per_page:20 )
-
-
-
   if input == 888
     exit_program
   elsif input == 777

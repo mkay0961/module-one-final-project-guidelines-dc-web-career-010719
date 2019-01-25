@@ -69,7 +69,7 @@ def get_stats(id)
 
 
   prompt = TTY::Prompt.new
-  input = prompt.select("\nWhat do you want to do?", per_page: 3) do |menu|
+  input = prompt.select("\nWhat do you want to do?", per_page: 4) do |menu|
     menu.choice "1." + " GO BACK".red , 1
     menu.choice "2. Find a new" + " player".red , 2
     menu.choice "3." + " Restart ".red + "program", 3
