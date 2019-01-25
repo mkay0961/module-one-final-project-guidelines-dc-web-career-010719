@@ -1,117 +1,115 @@
 def team_menu
-puts "Which team would you like to know about?"
+# puts "Which team would you like to know about?"
 array = []
+choices = []
+count =0
  Team.all.each_with_index do|team, index|
-   puts "#{index+1}. #{team.name}"
+   # puts "#{index+1}. #{team.name}"
+   hash = {name: "#{index+1}. #{team.name}"}
+   hash.merge!(value: count)
+   count+=1
    array << team
- end
- input = gets.chomp
- #binding.pry
- system "clear"
- if input == "exit"
-   exit_program
+   choices << hash
 
- elsif input.downcase == "restart"
-   get_menu
- elsif (1..30).include?(input.to_i)
-   menu_options(array[input.to_i-1])
- else system "clear"
-   puts "Not a valid input. Please enter the index of the team you are searching for."
-   sleep(2)
-team_menu
- # elsif input
- #   puts "That is not a valid input. Try again."
- #   sleep(1.5)
- #   system "clear"
- #   team_menu
-  end
+
+ end
+
+ prompt = TTY::Prompt.new
+ input = prompt.select("Which team would you like to know about", choices, per_page: choices.size )
+ puts input
+
+ menu_options(array[input])
+
 end
 
 def menu_options(team)
   system "clear"
-  puts "What do you want to know about The #{team.name}?"
-  puts "\n Enter the" + " keyword ".red + "or index of your choice"
-  puts "1. Which players appeared on the" + " roster".red + " in 2018?"
-  puts "2." + " Where ".red + "do they play?" #city #state #venue
-  puts "3. What" + " league ".red + "are they in?"
-  puts "4. What" + " division ".red + "are they in?"
-  puts "5. What is the front office" + " phone ".red + "number?"
-  puts "6. What is the url to their" + " website?".red
-  puts "7." + " Restart ".red + "program"
-  puts "8." + " Exit ".red + "the program"
 
-  input = gets.chomp
+  prompt = TTY::Prompt.new
+  input = prompt.select("What do you want to know about The #{team.name}?", per_page: 8) do |menu|
+    menu.choice "1. Which players appeared on the" + " roster".red + " in 2018?", 1
+    menu.choice "2." + " Where ".red + "do they play?", 2
+    menu.choice "3. What" + " league ".red + "are they in?", 3
+    menu.choice "4. What" + " division ".red + "are they in?", 4
+    menu.choice "5. What is the front office" + " phone ".red + "number?", 5
+    menu.choice "6. What is the url to their" + " website?".red, 6
+    menu.choice "7." + " Restart ".red + "program", 7
+    menu.choice "8." + " Exit ".red + "the program", 8
+  end
+
+
+
+  # input = gets.chomp
   case input
-  when "1" , "1.", "roster"
+  when 1
     system "clear"
     getplayers(team)
     #moreteam(team)
-  when "2" , "2." , "where"
+  when 2
     system "clear"
     get_city_venue_state(team)
     moreteam(team)
-  when "3" , "3.", "league"
+  when 3
     system "clear"
     get_league(team)
     moreteam(team)
-  when "4" ,"4." ,"division"
+  when 4
     system "clear"
     get_division(team)
     moreteam(team)
-  when "5", "5.", "phone number"
+  when 5 
     system "clear"
     get_phonenumber(team)
     moreteam(team)
-  when "6",  "6.", "website"
+  when 6
     system "clear"
     get_link(team)
     moreteam(team)
-  when "restart",  "7", "7.", "Restart"
+  when 7
     system "clear"
     get_menu
-  when "exit",  "8", "8."
+  when 8
     system "clear"
     exit_program
-  else puts "Not a valid input. Try again."
-    sleep (1)
-    menu_options(team)
   end
 
 end
 
 def getplayers(team)
   # binding.pry
+  prompt = TTY::Prompt.new
+  choices =[]
+  count = 0
+  choices << {name: "Find" +" more ".red + "about #{team.name}\n", value: 777}
 
   puts "The players on the #{team.name} are: "
   array = []
   team.players.each_with_index do |player,index|
-    puts "#{index+1}. #{player.full_name}"
+    # puts "#{index+1}. #{player.full_name}"
+    hash = {name: "Info about: "+"#{player.full_name}".red}
+    hash.merge!(value: count)
+    count+=1
+    choices << hash
     array << player
   end
-  # puts "\nWould you like to know more about a player or the team?"
-  puts "\nTo see information about one of these players, enter their index now."
-  puts "\nOtherwise:\nType " + "more".red + " to see information about the #{team.name}."
-  puts "To select a new team or player, enter" + " restart".red
-  puts "Enter" + " exit ".red + "to leave the database."
-  input = gets.chomp.downcase
+  choices << {name: "Restart ".red + "program", value: 999}
+  choices << {name: "Exit ".red + "the program", value: 888}
+  input = prompt.select("\nWhat would you like to do?", choices, per_page:40 )
 
-  if input == "exit"
+
+
+  if input == 888
     exit_program
-  elsif input == "more"
+  elsif input == 777
     system "clear"
     menu_options(team)
-  elsif input == "restart"
+  elsif input == 999
     system "clear"
     get_menu
-  elsif (1..array.length).include?(input.to_i)
-    player_info_menu(array[input.to_i-1])
-  else puts "Not a valid input. Try again."
-  sleep(1)
-  system "clear"
-  getplayers(team)
+  else
+    #binding.pry
+    player_info_menu(array[input])
   end
-
-
 
 end
 
@@ -149,26 +147,23 @@ def get_link(team)
 end
 
 def moreteam(team)
-  puts "\nWould you like to find out" + " more ".red + "about the #{team.name}?"
-  puts "Or maybe info about a" + " different ".red + "team?"
-  puts "To select a new team or player, enter" + " restart".red
-  puts "Exit ".red + "to leave the database."
-  input = gets.chomp.downcase
-  if input == "more" || input == "yes"
+  prompt = TTY::Prompt.new
+  input = prompt.select("\nWhat would you like to do?", per_page: 10) do |menu|
+    menu.choice "1. Find more about the "+ "#{team.name}".red+"?", 1
+    menu.choice "2. Select a" + " different team".red+"?", 2
+    menu.choice "3." + " Restart ".red + "program", 3
+    menu.choice "4." + " Exit ".red + "the program", 4
+  end
+  if input == 1
     system "clear"
     menu_options(team)
-  elsif input == "exit"
+  elsif input == 4
     exit_program
-  elsif input == "different"
+  elsif input == 2
     system "clear"
     team_menu
-  elsif input == "restart"
+  elsif input == 3
     system "clear"
     get_menu
-  else
-    puts "Not a valid input. Try again."
-    sleep(1)
-    system "clear"
-    moreteam(team)
   end
 end
