@@ -37,7 +37,25 @@ def exit_program
   system "clear"
   pastel = Pastel.new
   font = TTY::Font.new(:starwars)
-  puts pastel.decorate(font.write("GOODBYE!!!"), :black, :on_white, :bold)
-  puts pastel.decorate("Thank you for using the MLB Database!".center(86), :black, :on_white, :bold)
+  # puts pastel.decorate(font.write("GOODBYE!!!"), :black, :on_white, :bold)
+  # puts pastel.decorate("\nThank you for using the MLB Database!".center(86), :black, :on_white, :bold)
+
+  box = TTY::Box.frame(
+    width: TTY::Screen.cols - (TTY::Screen.cols/2),
+    height: TTY::Screen.lines - (TTY::Screen.lines/2),
+    align: :center,
+    padding: 3
+  ) do
+    <<-'EOF'
+    _____  ____   ____  _____  ______     ________ _ _
+ / ____|/ __ \ / __ \|  __ \|  _ \ \   / /  ____| | |
+| |  __| |  | | |  | | |  | | |_) \ \_/ /| |__  | | |
+| | |_ | |  | | |  | | |  | |  _ < \   / |  __| | | |
+| |__| | |__| | |__| | |__| | |_) | | |  | |____|_|_|
+ \_____|\____/ \____/|_____/|____/  |_|  |______(_|_)
+
+   EOF
+  end
+  puts box
   sleep(1)
 end
