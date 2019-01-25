@@ -5,7 +5,6 @@ def player_menu
   input = gets.chomp.downcase
     if input.downcase == "exit"
       exit_program
-
     elsif
       input.downcase == "restart"
       get_menu
@@ -15,34 +14,33 @@ def player_menu
   end
 
   def results(input)
-  choices =[]
-  count = 0
-  results = Player.all.select{|player| player.full_name.downcase.include?(input)}
+    choices =[]
+    count = 0
+    results = Player.all.select{|player| player.full_name.downcase.include?(input)}
 
-  results.each do |player|
-  hash = {name: "#{count+1}. #{player.full_name}"}
-  hash.merge!(value: count)
-  count+=1
-  choices << hash
-  end
-  # binding.pry
-  choices << {name: "Find a new "+"player".red, value: 7777}
-  choices << {name: "Restart ".red + "program", value: 999}
-  choices << {name: "Exit ".red + "the program", value: 888}
-  prompt = TTY::Prompt.new
-  input = prompt.select("Which team would you like to know about", choices, per_page:30 )
-  if input == 888
-    exit_program
-  elsif input == 999
-    system "clear"
-    get_menu
-  elsif input == 7777
-    system "clear"
-    player_menu
-  else
-    puts results[input]
-    player_info_menu(results[input])
-  end
+    results.each do |player|
+      hash = {name: "#{count+1}. #{player.full_name}"}
+      hash.merge!(value: count)
+      count+=1
+      choices << hash
+    end
+    choices << {name: "Find a new "+"player".red, value: 7777}
+    choices << {name: "Restart ".red + "program", value: 999}
+    choices << {name: "Exit ".red + "the program", value: 888}
+    prompt = TTY::Prompt.new
+    input = prompt.select("Which team would you like to know about", choices, per_page:30 )
+    if input == 888
+      exit_program
+    elsif input == 999
+      system "clear"
+      get_menu
+    elsif input == 7777
+      system "clear"
+      player_menu
+    else
+      puts results[input]
+      player_info_menu(results[input])
+    end
 end
 
 def player_info_menu(player)
@@ -190,7 +188,6 @@ def get_twitter(player)
 end
 
 def moreplayer(player)
-
 
   prompt = TTY::Prompt.new
   input = prompt.select("\nWhat would you like to do?", per_page: 10) do |menu|

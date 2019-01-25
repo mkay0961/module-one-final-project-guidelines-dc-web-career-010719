@@ -1,30 +1,27 @@
 def team_menu
-# puts "Which team would you like to know about?"
-array = []
-choices = []
-count =0
- Team.all.each_with_index do|team, index|
-   hash = {name: "#{index+1}. #{team.name}"}
-   hash.merge!(value: count)
-   count+=1
-   array << team
-   choices << hash
-
-
- end
- choices << {name: "Restart ".red + "program", value: 999}
- choices << {name: "Exit ".red + "the program", value: 888}
- prompt = TTY::Prompt.new
- input = prompt.select("Which team would you like to know about", choices, per_page: choices.size )
- puts input
- if input == 888
-   exit_program
- elsif input == 999
-   system "clear"
-   get_menu
- else
-    menu_options(array[input])
- end
+  array = []
+  choices = []
+  count =0
+   Team.all.each_with_index do|team, index|
+     hash = {name: "#{index+1}. #{team.name}"}
+     hash.merge!(value: count)
+     count+=1
+     array << team
+     choices << hash
+   end
+   choices << {name: "Restart ".red + "program", value: 999}
+   choices << {name: "Exit ".red + "the program", value: 888}
+   prompt = TTY::Prompt.new
+   input = prompt.select("Which team would you like to know about", choices, per_page: choices.size )
+   puts input
+   if input == 888
+     exit_program
+   elsif input == 999
+     system "clear"
+     get_menu
+   else
+      menu_options(array[input])
+   end
 end
 
 def menu_options(team)
@@ -78,7 +75,6 @@ def menu_options(team)
 end
 
 def getplayers(team)
-  # binding.pry
   prompt = TTY::Prompt.new
   choices =[]
   count = 0
@@ -105,11 +101,10 @@ def getplayers(team)
     system "clear"
     get_menu
   else
-    #binding.pry
     player_info_menu(array[input])
   end
-
 end
+
 
 def get_city_venue_state(team)
     puts "The #{team.name} are from #{team.city}, #{team.state}."
@@ -139,7 +134,6 @@ def get_link(team)
     Launchy.open(team.link)
   else
     system "clear"
-    #Launchy.open("google.com")
   end
 end
 

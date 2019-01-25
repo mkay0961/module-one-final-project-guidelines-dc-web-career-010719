@@ -1,14 +1,27 @@
 def get_stats(id)
 
-  #binding.pry
+  hitting_stats = get_hitting_stats(id)
+  pitching_stats = get_pitching_stats(id)
+  print_hitting_stats(hitting_stats,id)
+  print_pitching_stats(pitching_stats,id)
+  call_prompt(id)
 
+end
+
+
+def get_hitting_stats(id)
   url = "http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='2017'&player_id=" + id
-
   uri = URI.parse(url)
   response = Net::HTTP.get_response(uri)
   hitting = JSON.parse(response.body)
-
   hinfo = hitting["sport_hitting_tm"]["queryResults"]
+  return hinfo
+
+end
+
+
+
+def get_pitching_stats(id)
 
   url = "http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type='R'&season='2017'&player_id=" + id
 
@@ -16,10 +29,14 @@ def get_stats(id)
   response = Net::HTTP.get_response(uri)
   pitching = JSON.parse(response.body)
   pitchinfo = pitching["sport_pitching_tm"]["queryResults"]
-#binding.pry
-  case hinfo.size
+  return pitchinfo
+
+end
+
+def print_hitting_stats(data,id)
+  case data.size
   when 3
-    hingo1 = hinfo["row"]
+    hingo1 = data["row"]
     puts "\nThe hitting STATS for #{Player.find_by(playerid: id).full_name}"
     table = Terminal::Table.new do |rows|
       rows << ['AVG', hingo1["avg"]]
@@ -36,12 +53,15 @@ def get_stats(id)
   when 2
     puts "\nThere are no hitting STATS for #{Player.find_by(playerid: id).full_name}"
   end
+end
 
 
 
-  case pitchinfo.size
+def print_pitching_stats(data,id)
+
+  case data.size
   when 3
-    pitchinfo1 = pitchinfo["row"]
+    pitchinfo1 = data["row"]
 
     puts "\nThe pitching STATS for #{Player.find_by(playerid: id).full_name}"
     table = Terminal::Table.new do |rows|
@@ -65,8 +85,9 @@ def get_stats(id)
     }"
   end
 
+end
 
-
+def call_prompt(id)
 
   prompt = TTY::Prompt.new
   input = prompt.select("\nWhat do you want to do?", per_page: 4) do |menu|
@@ -90,13 +111,4 @@ def get_stats(id)
     system "clear"
     exit_program
   end
-
-
-
-
-
-
-
-
-
 end
