@@ -87,7 +87,7 @@ def getplayers(team)
   puts "The players on the #{team.name} are: "
   array = []
   team.players.each_with_index do |player,index|
-    hash = {name: "Info about: "+"#{player.full_name}".red}
+    hash = {name: "More info on "+"#{player.full_name}".red}
     hash.merge!(value: count)
     count+=1
     choices << hash
@@ -95,7 +95,7 @@ def getplayers(team)
   end
   choices << {name: "Restart ".red + "program", value: 999}
   choices << {name: "Exit ".red + "the program", value: 888}
-  input = prompt.select("\nWhat would you like to do?", choices, per_page:20 )
+  input = prompt.select("\nWhat would you like to do?", choices, per_page:40 )
   if input == 888
     exit_program
   elsif input == 777
